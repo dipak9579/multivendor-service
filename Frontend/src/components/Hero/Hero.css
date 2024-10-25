@@ -10,3 +10,7 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.hero p{
+    font-size: 20px;
+}

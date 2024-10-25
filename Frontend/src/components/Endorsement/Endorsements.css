@@ -1,0 +1,83 @@
+/* Container Styling */
+.endorsements-container {
+  padding: 40px;
+  background-color: #131834;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+/* Title Styling */
+.endorsements-title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+/* Endorsements List Styling */
+.endorsements-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Card Styling */
+.endorsement-card {
+  background: linear-gradient(145deg, #1a234a, #10162b);
+  border-radius: 10px;
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Card Hover Effect */
+.endorsement-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+      0 8px 16px rgba(0, 0, 0, 0.5), /* Darker shadow on hover */
+      0 0 20px rgba(0, 255, 234, 0.6), /* Enhanced teal glow */
+      0 0 30px rgba(0, 120, 255, 0.5), /* Enhanced blue glow */
+      0 0 40px rgba(0, 255, 234, 0.4);
+}
+
+/* Image Styling */
+.endorser-image {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto; /* Center the image horizontally */
+  display: block; /* Ensures margin auto works */
+}
+
+/* Endorser Name and Quote Styling */
+.endorser-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+}
+
+.endorser-quote {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #c0c0c0;
+  margin-bottom: 15px;
+}
+
+/* Social Media Links Styling */
+.social-media-links {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.social-link {
+  font-size: 0.9rem;
+  color: #0affc5;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social-link:hover {
+  color: #00e5ff;
+}

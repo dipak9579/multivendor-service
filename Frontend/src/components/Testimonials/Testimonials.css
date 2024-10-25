@@ -1,0 +1,79 @@
+/* Testimonials Container */
+.testimonials-container {
+    padding: 50px;
+    background-color: #131834;
+    text-align: center;
+  }
+  
+  /* Title Styling */
+  .testimonials-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 45px;
+    color: #f0f0f0;
+  }
+  
+  /* Cards Container */
+  .testimonials-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Card Styling */
+.testimonial-card {
+    background: linear-gradient(145deg, #1a234a, #10162b);
+    border-radius: 10px;
+    padding: 20px;
+    width: 280px;
+    color: #f0f0f0;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;           /* Enable flexbox */
+    flex-direction: column;   /* Arrange items vertically */
+    align-items: center;      /* Center items horizontally */
+  }
+  
+  /* Image Styling */
+  .testimonial-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid #4caf50;
+    display: block;           /* Ensures image is centered within flex container */
+  }
+  
+  
+  /* Card Hover Effect */
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    /* box-shadow: 0px 4px 8px rgba(33, 45, 84, 0.6),
+                0px 0px 20px 5px rgba(0, 255, 234, 0.5),
+                0px 0px 30px 10px rgba(0, 120, 255, 0.4); */
+  }
+  
+ 
+  /* Name and Role Styling */
+  .testimonial-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 5px 0;
+    color: #e0e0e0;
+  }
+  
+  .testimonial-role {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    margin-bottom: 10px;
+  }
+  
+  /* Feedback Text Styling */
+  .testimonial-feedback {
+    font-size: 1rem;
+    color: #d0d0d0;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  

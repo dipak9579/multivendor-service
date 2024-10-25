@@ -1,0 +1,61 @@
+/* Container Styling */
+.benefits-container {
+    padding: 50px;
+    background-color: #131834;
+    text-align: center;
+    color: #f0f0f0;
+  }
+  
+  /* Title Styling */
+  .benefits-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+  
+  /* Benefits Section Styling */
+  .benefits-section {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Card Styling */
+  .benefits-card {
+    background: linear-gradient(145deg, #1a234a, #10162b);
+    border-radius: 12px;
+    padding: 20px;
+    width: 280px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+  }
+  
+  /* Card Hover Effect */
+  .benefits-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(33, 45, 84, 0.6),
+                0px 0px 25px 5px rgba(0, 255, 234, 0.5),
+                0px 0px 40px 15px rgba(0, 120, 255, 0.4);
+  }
+  
+  /* Card Title Styling */
+  .benefits-card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 15px;
+  }
+  
+  /* Benefits List Styling */
+  .benefits-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .benefit-item {
+    font-size: 1rem;
+    color: #d0d0d0;
+    margin: 8px 0;
+  }
+  

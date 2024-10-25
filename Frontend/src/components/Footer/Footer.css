@@ -1,0 +1,85 @@
+/* Footer Container */
+.footer {
+  background-color: #1a2238;
+  color: #f0f0f0;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Footer Content Grid */
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Footer Sections */
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+  margin: 10px 0;
+}
+
+/* Footer Logo */
+.footer-logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #a78bfa, #ec4899, #ef4444);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Footer Titles */
+.footer-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #0affc5, #08aeea);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Links */
+.footer-links {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin: 5px 0;
+}
+
+.footer-links a {
+  color: #f0f0f0;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #0affc5;
+}
+
+/* Social Media Icons */
+.footer-social a {
+  color: #f0f0f0;
+  font-size: 1.4rem;
+  margin: 0 8px;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: #0affc5;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  margin-top: 20px;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+  color: #c0c0c0;
+}

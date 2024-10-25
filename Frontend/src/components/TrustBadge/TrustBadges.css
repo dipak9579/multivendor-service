@@ -1,0 +1,61 @@
+/* Container Styling */
+.trust-container {
+    padding: 40px;
+    background-color: #131834;
+    color: #f0f0f0;
+    text-align: center;
+  }
+  
+  /* Title Styling */
+  .trust-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  /* Badges Section Styling */
+  .badges-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  
+  /* Badge Card Styling */
+  .badge-card {
+    background: linear-gradient(145deg, #1a234a, #10162b);
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  /* Badge Hover Effect */
+  .badge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(33, 45, 84, 0.6),
+                0px 0px 20px 5px rgba(0, 255, 234, 0.5),
+                0px 0px 30px 15px rgba(0, 120, 255, 0.4);
+  }
+  
+  /* Badge Icon Styling */
+  .badge-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  /* Badge Title and Description */
+  .badge-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .badge-description {
+    font-size: 0.9rem;
+    color: #c0c0c0;
+  }
+  
+ 

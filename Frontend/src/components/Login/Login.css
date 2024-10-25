@@ -1,0 +1,66 @@
+/* Login.css */
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #131834; /* Your dark background */
+    color: #f0f0f0; /* Text color */
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px; /* Set a fixed width */
+    margin-bottom: 20px;
+    background: linear-gradient(145deg, #1a234a, #10162b); /* Gradient background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding around the form */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  }
+  
+  .login-form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px;
+    background-color: #212e4d; /* Dark background for inputs */
+    color: #f0f0f0; /* Text color in inputs */
+  }
+  
+  .login-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50; /* Green color */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .login-form button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  p {
+    color: #e0e0e0; /* Text color for the paragraph */
+  }
+  .login-link a {
+    color: #4e94e3;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .login-link a:hover {
+    color: #3a76b0;
+  }
+  
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 400px) {
+    .login-form {
+      width: 90%; /* Full width on smaller screens */
+    }
+  }
+  

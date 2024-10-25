@@ -6,10 +6,13 @@ const Hero = () => {
   return (
     <div className='hero'>
 
-      <h1 className='font-extrabold text-3xl my-3'>Connecting You with Local Experts.</h1>
-      <p>At MultiServe, we believe in the power of local expertise.</p>
-      <p>   Our platform connects you with trusted  </p>
-      <p>professionals in your community,ensuring that you receive tailored solutions that meet your unique needs.</p>
+      <h1 className='font-extrabold text-3xl my-10'>Connecting You with Local Experts.</h1>
+    
+         <p>At MultiServe, we believe in the power of local expertise.</p>
+         <p>Our platform connects you with trusted  </p>
+         <p>professionals in your community,ensuring that you receive tailored solutions that meet your unique needs.</p>
+    
+      
 
       <div className='w-screen  mt-4'>
         <form className="max-w-md mx-auto ">

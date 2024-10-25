@@ -39,7 +39,7 @@
     flex-direction: column;
   }
   
-  .login-btn, .signup-btn {
+  .login,.signup {
     border: none;
     cursor: pointer;
     background-color: rgb(2, 2, 34);

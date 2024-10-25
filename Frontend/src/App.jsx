@@ -13,6 +13,9 @@ import FAQ from './components/FAQ/FAQ';
 import Footer from './components/Footer/Footer';
 import SignUp from './components/SignUp/SignUp'; // Import SignUp component
 import Login from './components/Login/Login'; // Import Login component
+import VendorRegister from './components/vendorDashboard/VendorRegister';
+import VendorLogin from './components/vendorDashboard/VendorLogin';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
 
 const App = () => {
   return (
@@ -32,13 +35,20 @@ const App = () => {
             <Endorsements />
             <FAQ />
             <Footer />
+          
           </>
         } />
+        <Route path="/vendorRegister" element={<VendorRegister/>}/>
+        <Route path="/vendorLogin" element={<VendorLogin/>}/>
      
         {/* Route for Sign Up */}
         <Route path="/signup" element={<SignUp />} />
         {/* Route for Login */}
         <Route path="/login" element={<Login />} />
+
+        {/* admin routes */}
+        <Route path="/admin" element={<AdminDashboard/>} />
+
       </Routes>
     </Router>
   );

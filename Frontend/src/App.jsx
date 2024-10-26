@@ -16,6 +16,7 @@ import Login from './components/Login/Login'; // Import Login component
 import VendorRegister from './components/vendorDashboard/VendorRegister';
 import VendorLogin from './components/vendorDashboard/VendorLogin';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard';
+import VendorServices from './components/vendorDashboard/VendorServices';
 
 const App = () => {
   return (
@@ -40,6 +41,8 @@ const App = () => {
         } />
         <Route path="/vendorRegister" element={<VendorRegister/>}/>
         <Route path="/vendorLogin" element={<VendorLogin/>}/>
+        <Route path="/vendorServices" element={<VendorServices/>}/>
+
      
         {/* Route for Sign Up */}
         <Route path="/signup" element={<SignUp />} />

@@ -5,7 +5,7 @@ dotenv.config();
 import User from '../models/user.model.js';
 
 const secretKey=process.env.JWT_SECRET
-// Register a new user
+
 export const registerUser = async (req, res) => {
     const { name, email, password, contactNumber, address } = req.body;
 
@@ -29,9 +29,11 @@ export const registerUser = async (req, res) => {
         await newUser.save();
         res.status(201).json({ message: 'User registered successfully', user: newUser });
     } catch (error) {
+        console.error('Registration error:', error); // Log the error
         res.status(500).json({ message: 'Registration failed', error });
     }
 };
+
 
 // User login
 export const loginUser = async (req, res) => {

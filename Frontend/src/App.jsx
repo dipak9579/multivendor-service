@@ -11,7 +11,7 @@ import ContactUs from './components/contact/ContactUs';
 import Endorsements from './components/Endorsement/Endorsements';
 import FAQ from './components/FAQ/FAQ';
 import Footer from './components/Footer/Footer';
-import SignUp from './components/SignUp/SignUp'; // Import SignUp component
+import SignUp from './components/signUp/SignUp'; // Import SignUp component
 import Login from './components/Login/Login'; // Import Login component
 import VendorRegister from './components/vendorDashboard/VendorRegister';
 import VendorLogin from './components/vendorDashboard/VendorLogin';

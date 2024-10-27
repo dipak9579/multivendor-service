@@ -1,62 +1,62 @@
 .user-profile {
-   position: absolute;
-   top: 2px;
-   right: 3px;
-    padding: 20px;
-    margin: 2px auto; 
-    width: 300px;
-    background-color: #131834;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 10px;
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  padding: 20px;
+  margin: 2px auto; 
+  width: 300px;
+  background-color: #131834;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease; /* Smooth transition for width change */
+}
 
-  }
-  .isEditing{
-    width: 350px;
-    
-  }
-  .profile-info {
-    margin-bottom: 20px;
-  }
-  
-  input {
-    width: calc(100% - 16px);
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    color: #333;
-    border-radius: 4px;
-  }
-  
-  button {
-    background-color: #4A90E2;
-    color: white;
-    border: none;
-    width: 100px;
-    border-radius: 4px;
-    padding: 8px 10px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #3B78B5;
-  }
-  
-  .logout-button {
-    margin-top: 0px;
-    background-color: #e74c3c;
-  }
-  
-  .logout-button:hover {
-    background-color: #c0392b;
-  }
-  
+.user-profile.expanded {
+  width: 350px; /* Increased width in editing mode */
+}
+
+h2 {
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.isEditing input {
+  width: calc(100% - 16px);
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  color: #333;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4A90E2;
+  color: white;
+  border: none;
+  width: 100px;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3B78B5;
+}
+
+.logout-button {
+  margin-top: 0px;
+  background-color: #e74c3c;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}

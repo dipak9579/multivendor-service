@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './UserProfile.css'; // Import your CSS file
+import './UserProfile.css';
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -18,15 +18,14 @@ const UserProfile = () => {
 
   const handleLogout = () => {
     alert('Logged out successfully!');
-    // Implement your logout logic here
   };
 
   return (
-    <div className="user-profile">
+    <div className={`user-profile ${isEditing ? 'expanded' : ''}`}>
       <h2>User Profile</h2>
       <div className="profile-info">
         {isEditing ? (
-          <div className='isEditing'>
+          <div className="isEditing">
             <input
               type="text"
               name="name"
@@ -49,7 +48,7 @@ const UserProfile = () => {
           </div>
         )}
       </div>
-    <button onClick={handleLogout} className="logout-button">Logout</button>
+      <button onClick={handleLogout} className="logout-button">Logout</button>
     </div>
   );
 };

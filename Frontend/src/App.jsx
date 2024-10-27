@@ -17,9 +17,16 @@ import VendorRegister from './components/vendorDashboard/VendorRegister';
 import VendorLogin from './components/vendorDashboard/VendorLogin';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard';
 import VendorServices from './components/vendorDashboard/VendorServices';
+import HomeService from './components/serviceListing/HomeService'
+import UserProfile from './components/navbar/UserProfile';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './context/ProtectedRoute';
+
+
 
 const App = () => {
   return (
+  <AuthProvider>
     <Router>
       <Navbar />
       <Routes>
@@ -36,6 +43,7 @@ const App = () => {
             <Endorsements />
             <FAQ />
             <Footer />
+           
           
           </>
         } />
@@ -49,11 +57,25 @@ const App = () => {
         {/* Route for Login */}
         <Route path="/login" element={<Login />} />
 
+        <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <UserProfile/>
+                        </ProtectedRoute>
+                    }
+                />
+       
+
+        {/* service routes */}
+        <Route path='/home-service' element={<HomeService/>}/>
+
         {/* admin routes */}
         <Route path="/admin" element={<AdminDashboard/>} />
 
       </Routes>
     </Router>
+    </AuthProvider>
   );
 };
 

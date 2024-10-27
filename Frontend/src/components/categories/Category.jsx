@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import "./Category.css"
 import beauty from "../../assets/beauty.svg"
 import homeDecor from "../../assets/homedecor.svg"
@@ -15,10 +16,13 @@ const Category = () => {
                     <img src={beauty} alt="" />
                     <span>Beauty</span>
                 </div>
+                <Link to="home-service">
                 <div className='category'>
                     <img src={homeDecor} alt="" />
                     <span>Home Decoration</span>
                 </div>
+                </Link>
+              
                 <div className='category'>
                     <img src={estateAgent} alt="" />
                     <span>Real State Agent</span>

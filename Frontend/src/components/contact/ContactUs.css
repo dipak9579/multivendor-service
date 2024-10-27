@@ -47,6 +47,7 @@
   
   /* Button Styling */
   .submit-button {
+    width: 100%;
     padding: 12px 20px;
     background: linear-gradient(145deg, #3a4fa3, #2a3973);
     border: none;

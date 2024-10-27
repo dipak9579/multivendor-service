@@ -1,0 +1,85 @@
+/* HomeService.css */
+.home-service {
+    padding: 20px;
+    margin-top: 50px;
+    /* background-color: #f9f9f9; */
+  }
+  
+  .filter-sort-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-sort-bar select {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #4A90E2; /* Change background color */
+    color: white; /* Change text color */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filter-sort-bar select:hover {
+    background-color: #3B78B5; /* Change background color on hover */
+  }
+  
+  .service-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .service-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    width: 250px;
+    padding: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .service-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .service-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .service-info {
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .service-info h3 {
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .service-info p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .book-button {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-button:hover {
+    background-color: #3B78B5; /* Change background color on hover */
+  }
+  

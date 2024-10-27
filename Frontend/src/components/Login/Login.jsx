@@ -5,9 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../context/AuthContext'; // Import useAuth from the correct path
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Destructure the login function from useAuth
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,12 +21,14 @@ const Login = () => {
 
       // Show success toast
       toast.success(response.data.message);
-      
-      // Save token to localStorage or session (optional, depending on your auth setup)
-      localStorage.setItem('token', response.data.token);
+
+      // Use login from useAuth to save the token and update auth state
+      login(response.data.token);
 
       // Redirect to home page
-      navigate('/');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     } catch (error) {
       // Show error toast
       toast.error(error.response?.data?.message || 'Login failed');
@@ -33,8 +37,8 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <ToastContainer/>
-      <h2 className='mb-7 text-2xl font-bold'>Login</h2>
+      <ToastContainer />
+      <h2 className='mb-7 text-2xl font-bold text-slate-100'>Login</h2>
       <form className="login-form" onSubmit={handleLogin}>
         <input
           type="email"

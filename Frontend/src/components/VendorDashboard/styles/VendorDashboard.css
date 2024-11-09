@@ -1,0 +1,36 @@
+.vendor-dashboard {
+    display: flex;
+    background-color: #131834;
+    color: #ffffff;
+  }
+  
+  .sidebar {
+    width: 200px;
+    padding: 20px;
+    background-color: #1e2338;
+  }
+  
+  .sidebar h2 {
+    text-align: center;
+  }
+  
+  .sidebar nav button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #3e8e41;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .sidebar nav button:hover {
+    background-color: #45a049;
+  }
+  
+  .main-content {
+    background: transparent;
+    padding: 20px;
+    flex: 1;
+  }
+  

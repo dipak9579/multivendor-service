@@ -9,7 +9,21 @@ const ServiceList = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('/api/services/vendor');
+        // Retrieve token from localStorage
+        const token = localStorage.getItem('vendorToken');
+        
+        if (!token) {
+          toast.error('You need to be logged in');
+          return;
+        }
+
+        // Send request with the token in the Authorization header
+        const response = await axios.get('http://localhost:5000/api/services/vendorService', {
+          headers: {
+            Authorization: `Bearer ${token}` // Pass token in Authorization header
+          }
+        });
+
         if (response.data && response.data.services) {
           setServices(response.data.services); // Update state if services are returned
         } else {
@@ -25,7 +39,21 @@ const ServiceList = () => {
 
   const handleDelete = async (serviceId) => {
     try {
-      await axios.delete(`/api/services/${serviceId}`);
+      // Retrieve token from localStorage
+      const token = localStorage.getItem('vendorToken');
+
+      if (!token) {
+        toast.error('You need to be logged in');
+        return;
+      }
+
+      // Delete service with token authentication
+      await axios.delete(`http://localhost:5000/api/services/deleteService/${serviceId}`, {
+        headers: {
+          Authorization: `Bearer ${token}` // Pass token in Authorization header
+        }
+      });
+
       setServices(services.filter((service) => service._id !== serviceId));
       toast.success('Service deleted successfully');
     } catch (error) {
@@ -54,4 +82,3 @@ const ServiceList = () => {
 };
 
 export default ServiceList;
-

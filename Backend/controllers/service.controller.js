@@ -33,6 +33,32 @@ export const postService = async (req, res) => {
     }
 };
 
+// Controller to get all services
+export const getAllService = async (req, res) => {
+    try {
+        const services = await Service.find();
+        res.status(200).json({ services });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch services', error });
+    }
+};
+
+// Controller to get all services for a specific vendor
+export const getVendorServices = async (req, res) => {
+    const vendorId = req.vendorId; // Assume vendorId is set by authentication middleware
+
+    try {
+        // Fetch services created by this vendor only
+        const services = await Service.find({ vendor: vendorId });
+        res.status(200).json({ services });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to fetch services', error });
+    }
+};
+
+
+
 // Delete Service - Delete a service after vendor login, with vendor verification
 export const deleteService = async (req, res) => {
     const { serviceId } = req.params; // Assume serviceId is passed as a parameter

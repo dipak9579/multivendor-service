@@ -27,6 +27,9 @@ import HomeService from './components/serviceListing/HomeService';
 import UserProfile from './components/navbar/UserProfile';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './context/ProtectedRoute';
+import Home from './components/Home';
+import ServiceForm from './components/VendorDashboard/ServiceForm';
+
 
 
 // HomePage component to use `user` inside AuthProvider context
@@ -37,6 +40,7 @@ const HomePage = () => {
     <>
       <Hero />
       <FeatureService />
+      
       <Category />
       <Testimonials />
       <Benefits />
@@ -44,7 +48,9 @@ const HomePage = () => {
       <ContactUs />
       <Endorsements />
       <FAQ />
+      <Home/>
       <Footer />
+  
       {/* {user && <UserProfile />}  */}
     </>
   );
@@ -69,6 +75,10 @@ const App = () => {
                 </VendorProtectedRoute>
               }
             />
+            <Route path="/getAllService" element={<Home/>}/>
+         
+
+            <Route path="/postService" element={<ServiceForm/>}/>
          
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />

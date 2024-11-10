@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -34,8 +35,18 @@ const ServiceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/services', formData);
+      // Retrieve token from local storage
+      const token = localStorage.getItem('vendorToken');
+      const response = await axios.post(
+        'http://localhost:5000/api/services/postService',
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
       toast.success(response.data.message);
+
+      // Reset form data after successful submission
       setFormData({
         title: '',
         description: '',
@@ -53,7 +64,6 @@ const ServiceForm = () => {
   return (
     <form onSubmit={handleSubmit} className="service-form">
       <h3>Post a New Service</h3>
-
       <label>Title</label>
       <input
         type="text"
@@ -162,10 +172,7 @@ const ServiceForm = () => {
         value={formData.images[0].altText}
         onChange={handleChange}
       />
-
-      <button type="submit" className="submit-button">
-        Post Service
-      </button>
+      <button type="submit" className="submit-button">Post Service</button>
     </form>
   );
 };

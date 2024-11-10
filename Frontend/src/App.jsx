@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
@@ -27,20 +26,19 @@ import HomeService from './components/serviceListing/HomeService';
 import UserProfile from './components/navbar/UserProfile';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './context/ProtectedRoute';
-import Home from './components/Home';
-import ServiceForm from './components/VendorDashboard/ServiceForm';
 
+import ServiceForm from './components/VendorDashboard/ServiceForm';
+import ServicePost from './components/ServiceCreate/ServicePost';
 
 
 // HomePage component to use `user` inside AuthProvider context
 const HomePage = () => {
   const { user } = useAuth();
-  
+
   return (
     <>
       <Hero />
       <FeatureService />
-      
       <Category />
       <Testimonials />
       <Benefits />
@@ -48,26 +46,24 @@ const HomePage = () => {
       <ContactUs />
       <Endorsements />
       <FAQ />
-      <Home/>
+      <ServicePost/>
       <Footer />
-  
-      {/* {user && <UserProfile />}  */}
     </>
   );
 };
 
 const App = () => {
   return (
-    <AuthProvider>
-           <VendorAuthProvider>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} /> {/* Home page route */}
-          <Route path="/vendorRegister" element={<VendorRegister />} />
-          <Route path="/vendorLogin" element={<VendorLogin />} />
+    <Router>
+      <AuthProvider>
+        <VendorAuthProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} /> 
+            <Route path="/vendorRegister" element={<VendorRegister />} />
+            <Route path="/vendorLogin" element={<VendorLogin />} />
 
-          <Route
+            <Route
               path="/vendorDashboard"
               element={
                 <VendorProtectedRoute>
@@ -75,28 +71,25 @@ const App = () => {
                 </VendorProtectedRoute>
               }
             />
-            <Route path="/getAllService" element={<Home/>}/>
-         
+            <Route path="/getAllService" element={<ServicePost/>} />
 
-            <Route path="/postService" element={<ServiceForm/>}/>
-         
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <UserProfile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/home-service" element={<HomeService />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-        
-        </Routes>
-      </Router>
-      </VendorAuthProvider>
-    </AuthProvider>
+            <Route path="/postService" element={<ServiceForm />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/home-service" element={<HomeService />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </VendorAuthProvider>
+      </AuthProvider>
+    </Router>
   );
 };
 

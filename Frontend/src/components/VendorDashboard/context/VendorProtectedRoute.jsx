@@ -2,10 +2,10 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useVendorAuth } from './VendorAuthContext';
 
+// VendorProtectedRoute.js
 const VendorProtectedRoute = ({ children }) => {
-  const { vendor } = useVendorAuth(); // Get the vendor status from context
-
-  // If the vendor is not logged in, redirect to login page
+  const { vendor } = useVendorAuth();
+  
   if (!vendor) {
     return <Navigate to="/vendorLogin" replace />;
   }

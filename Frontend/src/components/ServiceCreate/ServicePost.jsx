@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import "./Home.css"
+import "./ServicePost.css";
 
-const Home = () => {
+const ServicePost = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
@@ -24,12 +24,20 @@ const Home = () => {
       <div className="services-list">
         {services.map((service) => (
           <div key={service._id} className="service-card">
+            <img 
+              src={service.imageUrl} 
+              alt={service.title} 
+              className="service-image" 
+            />
             <h3>{service.title}</h3>
             <p>{service.description}</p>
             <p><strong>Category:</strong> {service.category}</p>
             <p><strong>Price:</strong> {service.pricing.amount} {service.pricing.currency}</p>
             <p><strong>Location:</strong> {`${service.location.city}, ${service.location.state}`}</p>
-            {/* Add additional fields if necessary */}
+            <div className="service-rating">
+              <strong>Rating:</strong> {service.rating} ⭐
+            </div>
+            <button className="book-button">Book Now</button>
           </div>
         ))}
       </div>
@@ -37,4 +45,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ServicePost;

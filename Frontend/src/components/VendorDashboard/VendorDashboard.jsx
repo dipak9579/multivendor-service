@@ -17,19 +17,20 @@ const VendorDashboard = () => {
   const navigate = useNavigate();
 
   // Redirect to vendor login if not authenticated
-  if (!vendor) {
-    navigate('/vendorLogin');
-    return null;
-  }
+  useEffect(() => {
+    if (!vendor) {
+      navigate('/vendorLogin');
+    }
+  }, [vendor, navigate]);
 
+  // Logout function
   const handleLogout = async () => {
     await logout();
-      // Show the success toast
-      toast.success('You have logged out successfully!', {
-        position: "top-right",
-        autoClose: 1000, // 2 seconds
-      });
-
+    // Show the success toast
+    toast.success('You have logged out successfully!', {
+      position: "top-right",
+      autoClose: 1000, // 2 seconds
+    });
 
     // Redirect to home page after 2 seconds
     setTimeout(() => {

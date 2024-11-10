@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import {jwtDecode} from 'jwt-decode';
 import './VendorLogin.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -20,29 +21,31 @@ const VendorLogin = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    try {
-      // Send login request to the backend
-      const response = await axios.post('http://localhost:5000/api/vendors/login', formData);
 
-      // Save the token in local storage
-      localStorage.setItem('vendorToken', response.data.token);
 
-      // Update the vendor state in the context
-      setVendor(true);  // Set vendor as authenticated
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      // Show success toast and redirect to dashboard after 1 second
-      toast.success('Login successful!');
-      setTimeout(() => {
-        navigate('/vendorDashboard');
-      }, 1000); // 1 second delay
-    } catch (err) {
-      const errorMessage = err.response?.data?.message || 'Login failed';
-      toast.error(errorMessage); // Show error toast
-    }
-  };
+  try {
+    const response = await axios.post('http://localhost:5000/api/vendors/login', formData);
+    
+    const token = response.data.token;
+    localStorage.setItem('vendorToken', token);
+
+    // Decode the token to get vendor data and set in context
+    const decodedToken = jwtDecode(token);
+    setVendor({ id: decodedToken.id }); // Assuming the token has 'id'
+
+    toast.success('Login successful!');
+    setTimeout(() => {
+      navigate('/vendorDashboard');
+    }, 1000); // 1-second delay
+  } catch (err) {
+    const errorMessage = err.response?.data?.message || 'Login failed';
+    toast.error(errorMessage);
+  }
+};
 
   return (
     <div className="vendor-login">

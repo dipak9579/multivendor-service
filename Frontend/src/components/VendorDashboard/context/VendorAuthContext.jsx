@@ -1,3 +1,4 @@
+// VendorAuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import {jwtDecode} from 'jwt-decode';
 
@@ -6,7 +7,6 @@ const VendorAuthContext = createContext();
 export const VendorAuthProvider = ({ children }) => {
   const [vendor, setVendor] = useState(null);
 
-  // Check if the vendor is already authenticated using the token
   useEffect(() => {
     const token = localStorage.getItem('vendorToken');
     if (token) {
@@ -15,7 +15,7 @@ export const VendorAuthProvider = ({ children }) => {
         const isExpired = decodedToken.exp * 1000 < Date.now();
         
         if (!isExpired) {
-          setVendor({ id: decodedToken.id }); // Assuming 'id' is part of the token payload
+          setVendor({ id: decodedToken.id }); // Set vendor with decoded data
         } else {
           localStorage.removeItem('vendorToken');
           setVendor(null); // Token expired
@@ -28,7 +28,6 @@ export const VendorAuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Logout function to clear vendor token and state
   const logout = () => {
     localStorage.removeItem('vendorToken');
     setVendor(null);

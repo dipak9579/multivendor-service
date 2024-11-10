@@ -3,6 +3,7 @@ import "./Navbar.css";
 import account from "../../assets/user.png";
 import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from './UserProfile';
+import VendorProfile from '../../components/VendorDashboard/VendorProfile'; // Assuming you have a separate component for vendor profile
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
@@ -31,8 +32,6 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
- 
-
   return (
     <div className={`nav ${sticky ? 'dark-nav' : ''}`}>
       <h1 className='font-extrabold text-3xl ml-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500'>
@@ -45,7 +44,6 @@ const Navbar = () => {
           <li><Link to="/vendorDashboard">Vendor Dashboard</Link></li>
           <li><Link to='/vendorServices'>Manage Services</Link></li>
           <li><Link to="/vendorBookings">Bookings</Link></li>
-       
         </ul>
       ) : (
         // Render Default Navbar for Users
@@ -60,8 +58,12 @@ const Navbar = () => {
         <img className="profile-image" onClick={handleMenu} src={account} alt="account" />
         {isMenuOpen && (
           <div className="menu">
-            {user ? (
-              <UserProfile /> 
+            {user || vendorToken ? (
+              vendorToken ? (
+                <VendorProfile /> // Render Vendor Profile for vendor
+              ) : (
+                <UserProfile /> // Render User Profile for logged-in users
+              )
             ) : (
               <>
                 <button className='login'><Link to="/login">Login</Link></button>

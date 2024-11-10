@@ -1,66 +1,72 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import './styles/VendorProfile.css';  // Import the CSS file
+import axios from 'axios';  // To make HTTP requests
+import "./styles/VendorProfile.css";  // Import the corresponding CSS file
 
 const VendorProfile = () => {
-  const [profile, setProfile] = useState({ name: '', contactNumber: '', businessName: '' });
+  const [vendorData, setVendorData] = useState(null);  // State to hold vendor data
+  const [loading, setLoading] = useState(true);  // State for loading
+  const [error, setError] = useState(null);  // State to handle errors
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const response = await axios.get('/api/vendor/profile');
-      setProfile(response.data);
+    // Fetch the vendor data after login
+    const fetchVendorData = async () => {
+      const token = localStorage.getItem('vendorToken');  // Get the JWT token from localStorage
+
+      if (!token) {
+        // If no token found, redirect to login or show an error
+        setError('You need to log in to view your profile.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Make the request to the backend to get vendor details
+        const response = await axios.get('http://localhost:5000/api/vendors/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,  // Send token in Authorization header
+          },
+        });
+
+        setVendorData(response.data.vendor);  // Set vendor data from the response
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch vendor details. Please try again later.');
+        setLoading(false);
+      }
     };
-    fetchProfile();
-  }, []);
 
-  const handleChange = (e) => setProfile({ ...profile, [e.target.name]: e.target.value });
+    fetchVendorData();
+  }, []);  // Empty dependency array ensures this effect runs only once when the component mounts
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put('/api/vendor/profile', profile);
-      toast.success('Profile updated successfully');
-    } catch {
-      toast.error('Failed to update profile');
-    }
-  };
+  if (loading) {
+    return <p>Loading...</p>;  // Show loading message while data is being fetched
+  }
+
+  if (error) {
+    return <p>{error}</p>;  // Show error message if there's an issue
+  }
+
+  if (!vendorData) {
+    return <p>No vendor data found.</p>;  // Fallback if vendorData is null
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="vendor-profile-container">
-      <h3>Edit Profile</h3>
-      <div className="form-field">
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={profile.name}
-          onChange={handleChange}
-          placeholder="Enter your name"
-        />
+    <div className="vendor-profile">
+      <h2>Vendor Profile</h2>
+      
+      <div className="profile-details">
+        <div className="profile-section">
+          <h3>Business Information</h3>
+          <p><strong>Business Name:</strong> {vendorData.businessName}</p>
+          <p><strong>Email:</strong> {vendorData.email}</p>
+          <p><strong>Phone:</strong> {vendorData.contactNumber}</p>
+        </div>
+
+        
+        
       </div>
-      <div className="form-field">
-        <label>Contact Number</label>
-        <input
-          type="text"
-          name="contactNumber"
-          value={profile.contactNumber}
-          onChange={handleChange}
-          placeholder="Enter your contact number"
-        />
-      </div>
-      <div className="form-field">
-        <label>Business Name</label>
-        <input
-          type="text"
-          name="businessName"
-          value={profile.businessName}
-          onChange={handleChange}
-          placeholder="Enter your business name"
-        />
-      </div>
-      <button type="submit">Save Changes</button>
-    </form>
+    </div>
   );
 };
 

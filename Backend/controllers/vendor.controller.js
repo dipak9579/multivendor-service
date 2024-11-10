@@ -63,6 +63,26 @@ export const loginVendor = async (req, res) => {
     }
 };
 
+export const getVendorProfile = async (req, res) => {
+    try {
+        // Access vendor ID from req.user (set by authenticateVendor middleware)
+        const vendorId = req.vendorId;  // The decoded user object from the JWT
+        const vendor = await Vendor.findById(vendorId);  // Find vendor by the ID from JWT
+
+        if (!vendor) {
+            return res.status(404).json({ message: 'Vendor not found' });
+        }
+
+        // Send the vendor data in the response
+        res.status(200).json({ vendor });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to fetch vendor profile', error });
+    }
+};
+
+
+
 // Update Vendor Profile
 export const updateVendorProfile = async (req, res) => {
     const vendorId = req.vendorId; // Assume you have set vendorId in req during authentication

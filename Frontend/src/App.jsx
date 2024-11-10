@@ -18,11 +18,16 @@ import VendorRegister from './components/vendors/VendorRegister';
 import VendorLogin from './components/vendors/VendorLogin';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard';
 import VendorServices from './components/vendors/VendorServices';
+import VendorDashboard from './components/VendorDashboard/VendorDashboard';
+
+import { VendorAuthProvider } from './components/VendorDashboard/context/VendorAuthContext';
+import VendorProtectedRoute from './components/VendorDashboard/context/VendorProtectedRoute';
+
 import HomeService from './components/serviceListing/HomeService';
 import UserProfile from './components/navbar/UserProfile';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './context/ProtectedRoute';
-import VendorDashboard from './components/VendorDashboard/VendorDashboard';
+
 
 // HomePage component to use `user` inside AuthProvider context
 const HomePage = () => {
@@ -48,13 +53,23 @@ const HomePage = () => {
 const App = () => {
   return (
     <AuthProvider>
+           <VendorAuthProvider>
       <Router>
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} /> {/* Home page route */}
           <Route path="/vendorRegister" element={<VendorRegister />} />
           <Route path="/vendorLogin" element={<VendorLogin />} />
-          <Route path="/vendorDashboard" element={<VendorDashboard />} />
+
+          <Route
+              path="/vendorDashboard"
+              element={
+                <VendorProtectedRoute>
+                  <VendorDashboard />
+                </VendorProtectedRoute>
+              }
+            />
+         
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route
@@ -70,6 +85,7 @@ const App = () => {
         
         </Routes>
       </Router>
+      </VendorAuthProvider>
     </AuthProvider>
   );
 };

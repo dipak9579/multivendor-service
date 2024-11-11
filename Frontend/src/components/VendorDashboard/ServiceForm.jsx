@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -12,8 +11,8 @@ const ServiceForm = () => {
     pricing: { amount: 0, currency: 'INR' },
     location: { city: '', state: '', country: '', zipCode: '' },
     availability: { from: '', to: '' },
-    images: [{ url: '', altText: '' }],
   });
+  const [imageFile, setImageFile] = useState(null); // State for selected image file
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,21 +31,47 @@ const ServiceForm = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Retrieve token from local storage
       const token = localStorage.getItem('vendorToken');
+
+      // Prepare FormData
+      const data = new FormData();
+      data.append('title', formData.title);
+      data.append('description', formData.description);
+      data.append('category', formData.category);
+      data.append('pricing[amount]', formData.pricing.amount);
+      data.append('pricing[currency]', formData.pricing.currency);
+      data.append('location[city]', formData.location.city);
+      data.append('location[state]', formData.location.state);
+      data.append('location[country]', formData.location.country);
+      data.append('location[zipCode]', formData.location.zipCode);
+      data.append('availability[from]', formData.availability.from);
+      data.append('availability[to]', formData.availability.to);
+
+      if (imageFile) {
+        data.append('image', imageFile); // Append the image file
+      }
+
       const response = await axios.post(
         'http://localhost:5000/api/services/postService',
-        formData,
+        data,
         {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data', // Important for file uploads
+          },
         }
       );
+
       toast.success(response.data.message);
 
-      // Reset form data after successful submission
+      // Reset form data and image file after successful submission
       setFormData({
         title: '',
         description: '',
@@ -54,8 +79,8 @@ const ServiceForm = () => {
         pricing: { amount: 0, currency: 'INR' },
         location: { city: '', state: '', country: '', zipCode: '' },
         availability: { from: '', to: '' },
-        images: [{ url: '', altText: '' }],
       });
+      setImageFile(null);
     } catch (error) {
       toast.error('Failed to post service');
     }
@@ -157,21 +182,13 @@ const ServiceForm = () => {
         required
       />
 
-      <label>Images</label>
+      <label>Upload Image</label>
       <input
-        type="text"
-        name="images[0].url"
-        placeholder="Image URL"
-        value={formData.images[0].url}
-        onChange={handleChange}
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
       />
-      <input
-        type="text"
-        name="images[0].altText"
-        placeholder="Image Alt Text"
-        value={formData.images[0].altText}
-        onChange={handleChange}
-      />
+
       <button type="submit" className="submit-button">Post Service</button>
     </form>
   );

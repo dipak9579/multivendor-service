@@ -31,8 +31,8 @@ const ServicePost = () => {
         {services.map((service) => (
           <div key={service._id} className="service-card">
             <img 
-              src={service.imageUrl} 
-              alt={service.title} 
+              src={service.images[0]?.url || '/placeholder-image.jpg'} // Use a placeholder if no image
+              alt={service.images[0]?.altText || service.title} 
               className="service-image" 
             />
             <h3>{service.title}</h3>

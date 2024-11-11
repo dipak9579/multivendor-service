@@ -1,29 +1,22 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
-
-const serviceSchema = new Schema({
+const serviceSchema = new mongoose.Schema({
   vendor: {
-    type: Schema.Types.ObjectId,
-    ref: 'Vendor', // Reference to the Vendor model
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Vendor',
     required: true,
   },
   title: {
     type: String,
     required: true,
-    trim: true,
   },
   description: {
     type: String,
     required: true,
-    trim: true,
   },
   category: {
     type: String,
     required: true,
-    trim: true,
-    enum: ['Plumbing', 'Electrical', 'Cleaning', 'Moving', 'Painting', 'IT Support', 'Other'],
-    // Enum restricts the service categories to predefined options
   },
   pricing: {
     amount: {
@@ -32,50 +25,27 @@ const serviceSchema = new Schema({
     },
     currency: {
       type: String,
-      default: 'INR',
+      required: true,
     },
   },
   location: {
-    city: { type: String, trim: true },
-    state: { type: String, trim: true },
-    country: { type: String, trim: true },
-    zipCode: { type: String, trim: true },
+    city: String,
+    state: String,
+    country: String,
+    zipCode: String,
   },
   availability: {
-    from: { type: Date },
-    to: { type: Date },
-  },
-  ratings: [
-    {
-      userId: { type: Schema.Types.ObjectId, ref: 'User' },
-      rating: { type: Number, min: 1, max: 5 },
-      reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
-    },
-  ],
-  averageRating: {
-    type: Number,
-    default: 0,
+    from: Date,
+    to: Date,
   },
   images: [
     {
-      url: { type: String },
-      altText: { type: String },
+      url: String,
+      altText: String,
     },
   ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-// Middleware to update `updatedAt` timestamp
-serviceSchema.pre('save', function (next) {
-  this.updatedAt = Date.now();
-  next();
+}, {
+  timestamps: true,
 });
 
 const Service = mongoose.model('Service', serviceSchema);

@@ -3,26 +3,38 @@ import Vendor from '../models/vendor.model.js';
 
 // Post Service - Create a new service after vendor login
 export const postService = async (req, res) => {
-    const vendorId = req.vendorId; // Assume vendorId is set by the authentication middleware
-    const { title, description, category, pricing, location, availability, images } = req.body;
+    const vendorId = req.vendorId; // Assume vendorId is set by VendorMiddleware
+    const { title, description, category, pricing, location, availability } = req.body;
 
     try {
-        // Check if the vendor exists in the database
+        // Check if the vendor exists
         const vendor = await Vendor.findById(vendorId);
         if (!vendor) {
             return res.status(404).json({ message: 'Vendor not found' });
         }
 
-        // Create the new service associated with the vendor
+        // Check if an image was uploaded
+        let image = {};
+        if (req.file) {
+            image = {
+                url: req.file.path,
+                altText: `${title} - Service Image`,
+            };
+        }
+
+        // Create and save the new service
         const newService = new Service({
             vendor: vendor._id,
             title,
             description,
             category,
-            pricing,
+            pricing: {
+                amount: pricing.amount,
+                currency: pricing.currency,
+            },
             location,
             availability,
-            images,
+            images: [image], // Save image as an array with a single object
         });
 
         await newService.save();
@@ -32,6 +44,7 @@ export const postService = async (req, res) => {
         res.status(500).json({ message: 'Service posting failed', error });
     }
 };
+
 
 // Controller to get all services
 export const getAllService = async (req, res) => {

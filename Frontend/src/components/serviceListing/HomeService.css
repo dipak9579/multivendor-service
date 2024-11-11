@@ -5,13 +5,13 @@
     /* background-color: #f9f9f9; */
   }
   
-  .filter-sort-bar {
+  .filter-bar {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
   }
   
-  .filter-sort-bar select {
+  .filter-bar select {
     padding: 8px;
     font-size: 1rem;
     border: 1px solid #ddd;
@@ -22,7 +22,7 @@
     transition: background-color 0.3s ease;
   }
   
-  .filter-sort-bar select:hover {
+  .filter-bar select:hover {
     background-color: #3B78B5; /* Change background color on hover */
   }
   
@@ -38,7 +38,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    width: 250px;
+    width: 380px;
     padding: 15px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
@@ -61,12 +61,12 @@
   
   .service-info h3 {
     margin: 10px 0;
-    color: #333;
+    color: #fff;
   }
   
   .service-info p {
     font-size: 0.9rem;
-    color: #555;
+    color: #fff;
   }
   
   .book-button {

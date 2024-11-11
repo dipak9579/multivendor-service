@@ -40,7 +40,7 @@ const HomePage = () => {
   return (
     <>
       <Hero />
-      <ServicePost/>
+      <ServicePost />
       <FeatureService />
       <Category />
       <Testimonials />
@@ -49,7 +49,7 @@ const HomePage = () => {
       <ContactUs />
       <Endorsements />
       <FAQ />
-  
+
       <Footer />
     </>
   );
@@ -63,35 +63,24 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} /> 
-
-          <Route path='/book' element={<BookingForm/>}/> 
-          <Route path='/confirmation' element={<ConfirmationPage/>}/>
-
+            
+            <Route path='/book' element={<ProtectedRoute><BookingForm /></ProtectedRoute>} />
+            <Route path='/confirmation' element={<ProtectedRoute><ConfirmationPage /></ProtectedRoute>} />
 
             <Route path="/vendorRegister" element={<VendorRegister />} />
             <Route path="/vendorLogin" element={<VendorLogin />} />
 
-            <Route
-              path="/vendorDashboard"
-              element={
-                <VendorProtectedRoute>
-                  <VendorDashboard />
-                </VendorProtectedRoute>
-              }
-            />
-            <Route path="/getAllService" element={<ServicePost/>} />
+            <Route path="/vendorDashboard" element={
+              <VendorProtectedRoute>
+                <VendorDashboard />
+              </VendorProtectedRoute>
+            } />
 
+            <Route path="/getAllService" element={<ServicePost />} />
             <Route path="/postService" element={<ServiceForm />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <UserProfile />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
             <Route path="/home-service" element={<HomeService />} />
             <Route path="/admin" element={<AdminDashboard />} />
           </Routes>

@@ -35,8 +35,12 @@ h2 {
   color: #333;
   border-radius: 4px;
 }
+.isEditing button {
+  margin-left: 10px;
+}
 
-button {
+
+.btn-edit {
   background-color: #4A90E2;
   color: white;
   border: none;
@@ -48,7 +52,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.btn-edit:hover {
   background-color: #3B78B5;
 }
 

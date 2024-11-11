@@ -8,6 +8,7 @@ const UserProfile = () => {
   const { user, logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [userInfo, setUserInfo] = useState(null); // Start as null to differentiate from loaded state
+  const [originalUserInfo, setOriginalUserInfo] = useState(null); // Store original user info
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const UserProfile = () => {
             headers: { Authorization: `Bearer ${token}` }
           });
           setUserInfo(response.data.user);
+          setOriginalUserInfo(response.data.user); // Store original user data
         } else {
           navigate('/login'); // Redirect to login if no token is found
         }
@@ -51,7 +53,10 @@ const UserProfile = () => {
     }
   };
 
-
+  const handleCancel = () => {
+    setUserInfo(originalUserInfo); // Reset user info to the original state
+    setIsEditing(false); // Exit edit mode
+  };
 
   if (!userInfo) return <div>Loading...</div>; // Show loading if user data isn't yet available
 
@@ -73,13 +78,14 @@ const UserProfile = () => {
               value={userInfo.email}
               readOnly // Make email read-only if it shouldn't be edited
             />
-            <button onClick={handleSave}>Save</button>
+            <button className='btn-edit' onClick={handleSave}>Save</button>
+            <button className='btn-cancel' onClick={handleCancel}>Cancel</button> {/* Cancel Button */}
           </div>
         ) : (
           <div>
             <p><strong>Name:</strong> {userInfo.name}</p>
             <p><strong>Email:</strong> {userInfo.email}</p>
-            <button onClick={handleEditToggle}>Edit</button>
+            <button className='btn-edit' onClick={handleEditToggle}>Edit</button>
           </div>
         )}
       </div>

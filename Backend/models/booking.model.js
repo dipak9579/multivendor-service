@@ -5,17 +5,17 @@ const { Schema } = mongoose;
 const bookingSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model
+    ref: 'User', 
     required: true,
   },
   service: {
     type: Schema.Types.ObjectId,
-    ref: 'Service', // Reference to the Service model
+    ref: 'Service', 
     required: true,
   },
   vendor: {
     type: Schema.Types.ObjectId,
-    ref: 'Vendor', // Reference to the Vendor who offers the service
+    ref: 'Vendor',
     required: true,
   },
   bookingDate: {
@@ -24,7 +24,7 @@ const bookingSchema = new Schema({
   },
   scheduledDate: {
     type: Date,
-    required: true, // Date when the service is scheduled
+    required: true, 
   },
   status: {
     type: String,
@@ -32,16 +32,46 @@ const bookingSchema = new Schema({
     default: 'Pending',
   },
   payment: {
-    amount: { type: Number, required: true }, // Total cost for the service
-    currency: { type: String, default: 'USD' },
+    amount: { type: Number, required: true },
+    currency: { type: String, default: 'INR' },
     status: {
       type: String,
       enum: ['Pending', 'Paid', 'Failed', 'Refunded'],
       default: 'Pending',
     },
-    transactionId: { type: String, unique: true, sparse: true }, // Optional transaction ID from the payment gateway
+    transactionId: { type: String, unique: true, sparse: true },
   },
   review: { type: Schema.Types.ObjectId, ref: 'Review' },
+  
+  // New fields
+  notes: {
+    type: String,
+    maxlength: 500, // Optional notes or special requests
+  },
+  duration: {
+    type: Number, // Duration in minutes
+  },
+  discount: {
+    discountAmount: { type: Number, default: 0 },
+    discountCode: { type: String },
+  },
+  location: {
+    address: { type: String },
+    city: { type: String },
+    state: { type: String },
+    zipCode: { type: String },
+  },
+  cancellationReason: {
+    type: String,
+    maxlength: 500, // Reason for cancellation
+  },
+  completedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'Vendor', // Or 'Staff' if you have a staff model
+  },
+  completionDate: {
+    type: Date,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -52,7 +82,7 @@ const bookingSchema = new Schema({
   },
 });
 
-// Middleware to update the `updatedAt` timestamp on document modification
+// Middleware to update `updatedAt` timestamp
 bookingSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import "./ServicePost.css";
 
 const ServicePost = () => {
   const [services, setServices] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -17,6 +19,10 @@ const ServicePost = () => {
 
     fetchServices();
   }, []);
+
+  const handleBookNow = (serviceId) => {
+    navigate('/book', { state: { serviceId } });
+  };
 
   return (
     <div className="home-page">
@@ -37,7 +43,12 @@ const ServicePost = () => {
             <div className="service-rating">
               <strong>Rating:</strong> {service.rating} ⭐
             </div>
-            <button className="book-button">Book Now</button>
+            <button 
+              className="book-button" 
+              onClick={() => handleBookNow(service._id)}
+            >
+              Book Now
+            </button>
           </div>
         ))}
       </div>

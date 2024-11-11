@@ -1,5 +1,5 @@
 import express from 'express';
-import { registerUser, loginUser, updateUserProfile, logoutUser } from '../controllers/user.controller.js';
+import { registerUser, loginUser,getProfile ,updateUserProfile, logoutUser } from '../controllers/user.controller.js';
 import { authMiddleware } from '../middlewares/Authenticated.js';
 
 const router = express.Router();
@@ -9,6 +9,8 @@ router.post('/register', registerUser);
 
 // User login route
 router.post('/login', loginUser);
+
+router.get('/profile',authMiddleware,getProfile);
 
 // Update user profile route (protected)
 router.put('/updateProfile', authMiddleware, updateUserProfile);

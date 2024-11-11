@@ -29,6 +29,8 @@ import ProtectedRoute from './context/ProtectedRoute';
 
 import ServiceForm from './components/VendorDashboard/ServiceForm';
 import ServicePost from './components/ServiceCreate/ServicePost';
+import BookingForm from './components/Booking/BookingForm';
+import ConfirmationPage from './components/Booking/ConfirmationPage';
 
 
 // HomePage component to use `user` inside AuthProvider context
@@ -38,6 +40,7 @@ const HomePage = () => {
   return (
     <>
       <Hero />
+      <ServicePost/>
       <FeatureService />
       <Category />
       <Testimonials />
@@ -46,7 +49,7 @@ const HomePage = () => {
       <ContactUs />
       <Endorsements />
       <FAQ />
-      <ServicePost/>
+  
       <Footer />
     </>
   );
@@ -60,6 +63,11 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} /> 
+
+          <Route path='/book' element={<BookingForm/>}/> 
+          <Route path='/confirmation' element={<ConfirmationPage/>}/>
+
+
             <Route path="/vendorRegister" element={<VendorRegister />} />
             <Route path="/vendorLogin" element={<VendorLogin />} />
 

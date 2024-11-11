@@ -38,12 +38,13 @@ const BookingForm = () => {
         paymentAmount,
       };
 
-     const response=await axios.post('http://localhost:5000/api/bookings/book', bookingData, {
+      const response = await axios.post('http://localhost:5000/api/bookings/book', bookingData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      // On successful booking, navigate to the confirmation page and pass the actual booking data
       toast.success('Booking successful!');
-      navigate('/confirmation', { state: { bookingData } });
+      navigate('/confirmation', { state: { booking: response.data.booking } });
     } catch (error) {
       console.error('Error booking service:', error);
       toast.error('Failed to book service.');

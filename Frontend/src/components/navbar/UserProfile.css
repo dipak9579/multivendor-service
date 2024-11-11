@@ -5,6 +5,7 @@
   padding: 20px;
   margin: 2px auto; 
   width: 300px;
+  height: 350px;
   background-color: #131834;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -57,10 +58,25 @@ h2 {
 }
 
 .logout-button {
-  margin-top: 0px;
-  background-color: #e74c3c;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+
 }
 
 .logout-button:hover {
   background-color: #c0392b;
+}
+
+.btn-bookings {
+  background-color: #FF9800;
+  color: white;
+  border: none;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.btn-bookings:hover {
+  background-color: #f57c00;
 }

@@ -58,6 +58,10 @@ const UserProfile = () => {
     setIsEditing(false); // Exit edit mode
   };
 
+  const handleBookingsClick = () => {
+    navigate('/getBookings'); // Navigate to the bookings page
+  };
+
   if (!userInfo) return <div>Loading...</div>; // Show loading if user data isn't yet available
 
   return (
@@ -88,7 +92,11 @@ const UserProfile = () => {
             <button className='btn-edit' onClick={handleEditToggle}>Edit</button>
           </div>
         )}
+        <button onClick={handleBookingsClick} className="btn-bookings">
+        View Bookings
+      </button>
       </div>
+      
       <button onClick={logout} className="logout-button">Logout</button>
     </div>
   );

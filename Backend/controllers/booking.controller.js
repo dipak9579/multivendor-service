@@ -59,14 +59,38 @@ export const bookService = async (req, res) => {
     }
 };
 
-// Cancel a Booking
-export const cancelBooking = async (req, res) => {
-    const userId = req.userId; // Assume userId is set by the authentication middleware
-    const { bookingId } = req.params; // Booking ID from request parameters
-    const { cancellationReason } = req.body; // Added cancellation reason
+// Get all bookings for the authenticated user
+export const getBookings = async (req, res) => {
+    const userId = req.userId; // Assume userId is set by authentication middleware
 
     try {
-        // Find the booking to cancel
+        // Fetch all bookings where the user is either the creator or involved
+        const bookings = await Booking.find({ user: userId })
+            .populate('service', 'name') // Populate the service name for each booking
+            .populate('vendor', 'name')  // Populate the vendor name for each booking
+            .populate('review')          // Optionally populate review if needed
+            .sort({ createdAt: -1 });    // Sort bookings by the most recent
+
+        if (!bookings || bookings.length === 0) {
+            return res.status(404).json({ message: 'No bookings found' });
+        }
+
+        // Return the bookings
+        res.status(200).json({ bookings });
+    } catch (error) {
+        console.error('Error fetching bookings:', error);
+        res.status(500).json({ message: 'Failed to fetch bookings', error });
+    }
+};
+
+
+export const cancelBooking = async (req, res) => {
+    const userId = req.userId;
+    const { bookingId } = req.params;
+    const { cancellationReason } = req.body;
+
+    try {
+        // Find the booking
         const booking = await Booking.findById(bookingId);
 
         if (!booking) {
@@ -80,15 +104,16 @@ export const cancelBooking = async (req, res) => {
 
         // Update the booking status to 'Cancelled'
         booking.status = 'Cancelled';
-        booking.cancellationReason = cancellationReason; // Store the reason for cancellation
+        booking.cancellationReason = cancellationReason; 
         await booking.save();
 
         res.status(200).json({ message: 'Booking cancelled successfully', booking });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to cancel booking', error });
+        console.error('Error in cancelBooking:', error);
+        res.status(500).json({ message: 'Failed to cancel booking', error: error.message });
     }
 };
+
 
 // Complete a Booking (for vendors)
 export const completeBooking = async (req, res) => {

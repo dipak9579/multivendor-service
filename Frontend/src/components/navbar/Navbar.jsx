@@ -41,6 +41,7 @@ const Navbar = () => {
       {/* Render Vendor Navbar if logged in as Vendor */}
       {vendorToken ? (
         <ul>
+          <li><Link to="/">Home</Link></li>
           <li><Link to="/vendorDashboard">Vendor Dashboard</Link></li>
           <li><Link to='/vendorServices'>Manage Services</Link></li>
           <li><Link to="/vendorBookings">Bookings</Link></li>
@@ -49,8 +50,8 @@ const Navbar = () => {
         // Render Default Navbar for Users
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to='/vendorServices'>Categories</Link></li>
-          <li><Link to="#">About Us</Link></li>
+          <li><Link to='/getAllService'>Service</Link></li>
+          <li><Link to="/aboutUs">About Us</Link></li>
         </ul>
       )}
 

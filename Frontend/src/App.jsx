@@ -32,6 +32,7 @@ import ServicePost from './components/ServiceCreate/ServicePost';
 import BookingForm from './components/Booking/BookingForm';
 import ConfirmationPage from './components/Booking/ConfirmationPage';
 import GetBookings from './components/Booking/GetBookings';
+import AboutUs from './components/navbar/AboutUs';
 
 
 // HomePage component to use `user` inside AuthProvider context
@@ -64,6 +65,7 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} /> 
+            <Route path='/aboutUs' element={<AboutUs/>}/>
 
             <Route path='/getBookings' element={<ProtectedRoute><GetBookings/></ProtectedRoute>}/>
             

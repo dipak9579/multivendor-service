@@ -7,7 +7,7 @@ import DashboardHome from './DashboardHome';
 import ServiceForm from './ServiceForm';
 
 import BookingsList from './BookingsList';
-import VendorProfile from './VendorProfile';
+
 
 import './styles/VendorDashboard.css';
 import VendorServices from './VendorServices';
@@ -50,7 +50,7 @@ const VendorDashboard = () => {
           <button onClick={() => setActiveTab('postService')}>Post Service</button>
           <button onClick={() => setActiveTab('viewServices')}>View Services</button>
           <button onClick={() => setActiveTab('bookings')}>Bookings</button>
-          <button onClick={() => setActiveTab('profile')}>Profile</button>
+          
           <button onClick={handleLogout}>Logout</button>
         </nav>
       </aside>
@@ -60,7 +60,7 @@ const VendorDashboard = () => {
         {activeTab === 'postService' && <ServiceForm />}
         {activeTab === 'viewServices' && <VendorServices/>}
         {activeTab === 'bookings' && <BookingsList />}
-        {activeTab === 'profile' && <VendorProfile />}
+     
       </main>
     </div>
   );

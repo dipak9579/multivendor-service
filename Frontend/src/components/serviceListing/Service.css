@@ -26,24 +26,24 @@
     background-color: #3B78B5; /* Change background color on hover */
   }
   
-  .service-cards {
+  .service-cards1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
   }
   
-  .service-card {
-    background-color: #fff;
+  .service-card1 {
+    background-color: #1e2338;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     width: 380px;
-    padding: 15px;
+    padding: 20px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   
-  .service-card:hover {
+  .service-card1:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
@@ -60,12 +60,14 @@
   }
   
   .service-info h3 {
-    margin: 10px 0;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
     color: #fff;
   }
   
   .service-info p {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    margin-bottom: 10px;
     color: #fff;
   }
   

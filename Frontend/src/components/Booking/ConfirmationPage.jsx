@@ -31,7 +31,7 @@ const ConfirmationPage = () => {
         <p><strong>Location:</strong> {`${booking.location.address}, ${booking.location.city}, ${booking.location.state}, ${booking.location.zipCode}`}</p>
       </div>
 
-      <button className='btn1' onClick={() => navigate('/services')}>Back to Services</button>
+      <button className='btn1' onClick={() => navigate('/getAllService')}>Back to Services</button>
       <button className='btn1' onClick={() => navigate('/')}>Go to Dashboard</button>
     </div>
   );

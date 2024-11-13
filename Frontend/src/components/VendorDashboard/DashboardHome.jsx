@@ -11,20 +11,16 @@ const DashboardHome = () => {
         <div className="overview-card">
           <h2>My Services</h2>
           <p>View, edit, or delete services that you offer to customers.</p>
-          <button>Go to Services</button>
+          {/* <button>Go to Services</button> */}
         </div>
 
         <div className="overview-card">
           <h2>Bookings</h2>
           <p>Check your latest bookings and manage customer requests.</p>
-          <button>View Bookings</button>
+          {/* <button>View Bookings</button> */}
         </div>
 
-        <div className="overview-card">
-          <h2>Profile</h2>
-          <p>Update your profile details, business information, and contact info.</p>
-          <button>Edit Profile</button>
-        </div>
+       
       </div>
     </div>
   );

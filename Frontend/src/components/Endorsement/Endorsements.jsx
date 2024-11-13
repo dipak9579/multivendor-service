@@ -1,10 +1,13 @@
 import React from 'react';
 import './Endorsements.css';
+import blogger from "../../assets/techBlogger.jpeg"
+import influencer from "../../assets/influencerX.jpeg"
+import news from "../../assets/dailyNews.jpeg"
 
 // Sample endorsements data
 const endorsements = [
   {
-    image: 'https://via.placeholder.com/80',
+    image: blogger,
     name: 'Tech Blogger',
     quote: '“This platform has revolutionized the way I find vendors!”',
     socialMedia: [
@@ -13,7 +16,7 @@ const endorsements = [
     ],
   },
   {
-    image: 'https://via.placeholder.com/80',
+    image: influencer,
     name: 'Influencer X',
     quote: '“The most reliable and trustworthy service marketplace out there.”',
     socialMedia: [
@@ -22,7 +25,7 @@ const endorsements = [
     ],
   },
   {
-    image: 'https://via.placeholder.com/80',
+    image: news,
     name: 'Daily News',
     quote: '“A top choice for customers and vendors alike!”',
     socialMedia: [

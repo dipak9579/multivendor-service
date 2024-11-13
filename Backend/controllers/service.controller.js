@@ -89,6 +89,41 @@ export const getHomeService = async (req, res) => {
       res.status(500).json({ message: 'Server error. Could not fetch services.' });
     }
   };
+
+
+
+  // Controller to get real estate agent services
+  export const getRealEstate = async (req, res) => {
+    try {
+      // Get the subCategory from the query parameter (e.g. ?subCategory=Agent)
+      const { subCategory } = req.query;
+  
+      // Build the query object
+      let query = { category: 'Real Estate'};
+  
+      // If subCategory is provided, add it to the query
+      if (subCategory) {
+        query.subCategory = subCategory;
+      }
+  
+      // Fetch the services from the database that match the query
+      const services = await Service.find(query);
+  
+      // Check if services are found
+      if (services.length === 0) {
+        return res.status(404).json({ message: 'No real estate agent services found.' });
+      }
+  
+      // Return the found services
+      res.status(200).json({
+        success: true,
+        services,
+      });
+    } catch (error) {
+      console.error('Error fetching real estate agent services:', error);
+      res.status(500).json({ message: 'Server error. Could not fetch services.' });
+    }
+  };
   
 
 

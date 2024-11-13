@@ -25,11 +25,13 @@ const Category = () => {
                     <span>Home Decoration</span>
                 </div>
                 </Link>
-              
-                <div className='category'>
+              <Link to="realState-service">
+              <div className='category'>
                     <img src={estateAgent} alt="" />
                     <span>Real State Agent</span>
                 </div>
+              </Link>
+             
             </div>
         </>
     )

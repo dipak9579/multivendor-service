@@ -1,6 +1,6 @@
 import express from 'express';
 import upload from '../config/multerConfig.js';
-import { postService, getAllService, deleteService, getVendorServices ,getBeautyService,getHomeService} from '../controllers/service.controller.js';
+import { postService, getAllService, deleteService, getVendorServices ,getBeautyService,getHomeService,getRealEstate} from '../controllers/service.controller.js';
 import { VendorMiddleware } from '../middlewares/VendorMiddleware.js';
 
 const router = express.Router();
@@ -10,6 +10,7 @@ router.post('/postService', VendorMiddleware, upload.single('image'), postServic
 router.get('/getAllService', getAllService);
 router.get('/getHomeService', getHomeService);
 router.get('/getBeauty', getBeautyService);
+router.get('/getRealState', getRealEstate);
 router.delete('/deleteService/:serviceId', VendorMiddleware, deleteService);
 router.get('/vendorService', VendorMiddleware, getVendorServices);
 

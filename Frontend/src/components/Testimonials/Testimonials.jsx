@@ -1,27 +1,29 @@
 import React from 'react';
 import './Testimonials.css';
-import dipak from "../../assets/dipak1.jpg"
+import dipak from "../../assets/dipakD.jpg"
+import ganesh from "../../assets/ganeshP.jpeg"
+import kaustubh from "../../assets/kaustubh.jpeg"
 
 const testimonialsData = [
   {
     id: 1,
-    name: 'John Doe',
-    role: 'Software Engineer',
+    name: 'Dipak Dandge',
+    role: 'AC,TV Repair Technician',
     image: dipak,
     feedback: 'This service is fantastic! It has truly transformed the way I work and increased my productivity.'
   },
   {
     id: 2,
-    name: 'Jane Smith',
-    role: 'Product Manager',
-    image: 'https://via.placeholder.com/100',
+    name: 'Ganesh Parhad',
+    role: 'Solar Installer',
+    image: ganesh,
     feedback: 'The team is amazing, and the results are always outstanding. I highly recommend this service!'
   },
   {
     id: 3,
-    name: 'Alice Johnson',
-    role: 'UX Designer',
-    image: 'https://via.placeholder.com/100',
+    name: 'Kaustubh',
+    role: 'RealEstate Agent',
+    image: kaustubh,
     feedback: 'Great experience! The platform is easy to use, and the support is exceptional.'
   }
 ];

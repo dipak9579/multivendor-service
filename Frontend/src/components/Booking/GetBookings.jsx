@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
-import './GetBookings.css'; // Assume this file contains your CSS
+import { useNavigate } from 'react-router-dom';
+import './GetBookings.css';
 
 const GetBookings = () => {
-  const { user } = useAuth();  // Assuming useAuth provides user context
+  const { user } = useAuth();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -37,17 +37,16 @@ const GetBookings = () => {
     
     if (!cancellationReason) {
         alert('Cancellation reason is required');
-        return; // Avoid making the API call without a reason
+        return;
     }
 
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.put(`http://localhost:5000/api/bookings/cancel/${bookingId}`, 
+        await axios.put(`http://localhost:5000/api/bookings/cancel/${bookingId}`, 
             { cancellationReason },
             { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        // Update the bookings state to reflect the cancelled booking
         setBookings((prevBookings) =>
             prevBookings.map((booking) =>
                 booking._id === bookingId ? { ...booking, status: 'Cancelled', cancellationReason } : booking
@@ -59,16 +58,41 @@ const GetBookings = () => {
         console.error('Error cancelling booking:', error.response?.data?.message || error.message);
         alert('Error cancelling booking');
     }
-};
+  };
 
+  const handleRateBooking = async (bookingId) => {
+    const rating = prompt('Rate the service (1-5):');
+
+    if (!rating || rating < 1 || rating > 5) {
+        alert('Please provide a rating between 1 and 5.');
+        return;
+    }
+
+    try {
+        const token = localStorage.getItem('token');
+        await axios.put(`http://localhost:5000/api/bookings/rate/${bookingId}`,
+            { rating },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        setBookings((prevBookings) =>
+            prevBookings.map((booking) =>
+                booking._id === bookingId ? { ...booking, rating } : booking
+            )
+        );
+
+        alert('Rating submitted successfully');
+    } catch (error) {
+        console.error('Error submitting rating:', error.response?.data?.message || error.message);
+        alert('Error submitting rating');
+    }
+  };
 
   if (loading) return <div>Loading your bookings...</div>;
 
   return (
     <div className="bookings-container">
-      {/* Back Button */}
-      <button className="btn-back" onClick={() => navigate(-1)}>Back</button> {/* navigate(-1) takes the user back to the previous page */}
-
+      <button className="btn-back" onClick={() => navigate(-1)}>Back</button>
       <h2>Your Booked Services</h2>
       {bookings.length === 0 ? (
         <p>You have no bookings yet.</p>
@@ -76,7 +100,6 @@ const GetBookings = () => {
         <div className="bookings-list">
           {bookings.map((booking) => (
             <div key={booking._id} className="booking-item">
-              {/* <h3>Service: {booking.service.name}</h3> */}
               <p><strong>Vendor:</strong> {booking.vendor.name}</p>
               <p><strong>Scheduled Date:</strong> {new Date(booking.scheduledDate).toLocaleString()}</p>
               <p><strong>Status:</strong> {booking.status}</p>
@@ -93,6 +116,15 @@ const GetBookings = () => {
                   Cancel Booking
                 </button>
               )}
+              {booking.status === 'Completed' && !booking.rating && (
+                <button 
+                    className="btn-rate" 
+                    onClick={() => handleRateBooking(booking._id)}
+                >
+                    Rate Service
+                </button>
+              )}
+              {booking.rating && <p><strong>Your Rating:</strong> {booking.rating} / 5</p>}
             </div>
           ))}
         </div>

@@ -1,5 +1,5 @@
 import express from 'express';
-import { bookService, cancelBooking, completeBooking ,getBookings,getVendorBookings} from '../controllers/booking.controller.js';
+import { bookService, cancelBooking, completeBooking ,getBookings,getVendorBookings,rateBooking} from '../controllers/booking.controller.js';
 import { authMiddleware } from '../middlewares/Authenticated.js';
 import {VendorMiddleware} from "../middlewares/VendorMiddleware.js"
 const router = express.Router();
@@ -17,8 +17,9 @@ router.put('/cancel/:bookingId', authMiddleware, cancelBooking);
 // Route to get all bookings for a vendor's services
 router.get('/getVendorbooking',VendorMiddleware, getVendorBookings);
 
-// Route to complete a booking (for vendors)
-// Added a route for vendors to mark the booking as completed
-router.post('/:bookingId/complete', authMiddleware, completeBooking);
+// Route to rate a booking
+router.put('/rate/:bookingId', authMiddleware, rateBooking);
+
+router.put('/complete/:bookingId',VendorMiddleware, completeBooking);
 
 export default router;

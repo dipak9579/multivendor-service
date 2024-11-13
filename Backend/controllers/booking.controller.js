@@ -114,11 +114,9 @@ export const cancelBooking = async (req, res) => {
     }
 };
 
-
-// Complete a Booking (for vendors)
 export const completeBooking = async (req, res) => {
     const { bookingId } = req.params;
-    const { vendorId } = req.userId; // Assume vendorId is set in the authentication middleware
+    const vendorId = req.vendorId;
 
     try {
         // Find the booking
@@ -127,6 +125,9 @@ export const completeBooking = async (req, res) => {
             return res.status(404).json({ message: 'Booking not found' });
         }
 
+        console.log(`Authenticated Vendor ID: ${vendorId}`); // Debug log
+        console.log(`Booking Vendor ID: ${booking.vendor.toString()}`); // Debug log
+
         // Check if the vendor is the one assigned to the service
         if (booking.vendor.toString() !== vendorId) {
             return res.status(403).json({ message: 'You are not authorized to complete this booking' });
@@ -134,8 +135,8 @@ export const completeBooking = async (req, res) => {
 
         // Mark the booking as completed
         booking.status = 'Completed';
-        booking.completedBy = vendorId; // Store the vendor who completed the service
-        booking.completionDate = Date.now(); // Store the date of completion
+        booking.completedBy = vendorId;
+        booking.completionDate = Date.now();
 
         await booking.save();
 
@@ -191,5 +192,31 @@ export const getVendorBookings = async (req, res) => {
     } catch (error) {
         console.error('Error fetching vendor bookings:', error);
         res.status(500).json({ message: 'Failed to fetch vendor bookings', error: error.message });
+    }
+};
+
+
+
+
+// Controller function to handle booking rating
+export const rateBooking = async (req, res) => {
+    const { rating } = req.body;
+    const { bookingId } = req.params;
+
+    try {
+        const booking = await Booking.findById(bookingId);
+        if (!booking) return res.status(404).json({ message: 'Booking not found' });
+
+        // Ensure only completed services can be rated
+        if (booking.status !== 'Completed') {
+            return res.status(400).json({ message: 'Service must be completed to add a rating' });
+        }
+
+        booking.rating = rating;
+        await booking.save();
+
+        res.json({ message: 'Rating submitted successfully', booking });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };

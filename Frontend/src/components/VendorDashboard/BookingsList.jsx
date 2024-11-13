@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './styles/BookingsList.css';  // Importing the CSS file
-import { useVendorAuth } from '../../components/VendorDashboard/context/VendorAuthContext'; // Importing the context
+import './styles/BookingsList.css';
+import { useVendorAuth } from '../../components/VendorDashboard/context/VendorAuthContext';
 
 const BookingsList = () => {
-  const { vendor } = useVendorAuth();  // Access vendor data from context
-  const [bookings, setBookings] = useState([]);  // Initialize as an empty array
-  const [loading, setLoading] = useState(true);  // For loading state
-  const [error, setError] = useState(null);  // For error state
+  const { vendor } = useVendorAuth();
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -18,15 +18,13 @@ const BookingsList = () => {
       }
 
       try {
-        // Use the vendor token from context
         const response = await axios.get('http://localhost:5000/api/bookings/getVendorBooking', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('vendorToken')}`,  // You can use vendorToken here
+            Authorization: `Bearer ${localStorage.getItem('vendorToken')}`,
           },
         });
 
-        console.log(response.data);  // Log to inspect the structure of the response
-        setBookings(response.data.bookings || []);  // Adjust based on actual response
+        setBookings(response.data.bookings || []);
         setLoading(false);
       } catch (err) {
         setError(err.response ? err.response.data.message : 'Failed to fetch bookings');
@@ -35,17 +33,35 @@ const BookingsList = () => {
     };
 
     fetchBookings();
-  }, [vendor]);  // Dependency on vendor context
+  }, [vendor]);
 
-  // If loading, show a loader or a loading message
-  if (loading) {
-    return <div>Loading bookings...</div>;
-  }
+  const handleCompleteBooking = async (bookingId) => {
+    try {
+      const response = await axios.put(`http://localhost:5000/api/bookings/complete/${bookingId}`, 
+        {}, 
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('vendorToken')}`,
+          },
+        }
+      );
 
-  // If there's an error, display an error message
-  if (error) {
-    return <div>{error}</div>;
-  }
+      // Update the booking status in the UI
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking._id === bookingId ? { ...booking, status: 'Completed', completionDate: new Date().toISOString() } : booking
+        )
+      );
+
+      alert(response.data.message);
+    } catch (error) {
+      console.error('Error completing booking:', error.response?.data?.message || error.message);
+      alert('Error completing booking');
+    }
+  };
+
+  if (loading) return <div>Loading bookings...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="bookings-container">
@@ -57,12 +73,20 @@ const BookingsList = () => {
               <div className="booking-details1">
                 <p className="booking-user">User: {booking.user.name}</p>
                 <p className="booking-service">Service: {booking.service.title}</p>
-                <p className="booking-date">Date: {new Date(booking.bookingDate).toLocaleDateString()}</p> {/* Updated this */}
-                
-                {/* Render location properties separately */}
+                <p className="booking-date">Date: {new Date(booking.bookingDate).toLocaleDateString()}</p>
                 <p className="booking-location">
                   Location: {`${booking.location.address}, ${booking.location.city}, ${booking.location.state} ${booking.location.zipCode}`}
                 </p>
+                <p className="booking-status">Status: {booking.status}</p>
+                
+                {booking.status !== 'Completed' && booking.status !== 'Cancelled' && (
+                  <button 
+                    className="btn-complete" 
+                    onClick={() => handleCompleteBooking(booking._id)}
+                  >
+                    Complete Booking
+                  </button>
+                )}
               </div>
             </div>
           ))

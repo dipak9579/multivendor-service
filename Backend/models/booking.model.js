@@ -42,11 +42,11 @@ const bookingSchema = new Schema({
     transactionId: { type: String, unique: true, sparse: true },
   },
   review: { type: Schema.Types.ObjectId, ref: 'Review' },
-  
+
   // New fields
   notes: {
     type: String,
-    maxlength: 500, // Optional notes or special requests
+    maxlength: 500,
   },
   duration: {
     type: Number, // Duration in minutes
@@ -63,14 +63,20 @@ const bookingSchema = new Schema({
   },
   cancellationReason: {
     type: String,
-    maxlength: 500, // Reason for cancellation
+    maxlength: 500,
   },
   completedBy: {
     type: Schema.Types.ObjectId,
-    ref: 'Vendor', // Or 'Staff' if you have a staff model
+    ref: 'Vendor',
   },
   completionDate: {
     type: Date,
+  },
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5,
+    required: false,
   },
   createdAt: {
     type: Date,

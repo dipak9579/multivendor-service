@@ -4,7 +4,7 @@ import Vendor from '../models/vendor.model.js';
 // Post Service - Create a new service after vendor login
 export const postService = async (req, res) => {
     const vendorId = req.vendorId; // Assume vendorId is set by VendorMiddleware
-    const { title, description, category, pricing, location, availability } = req.body;
+    const { title, description, category, subCategory, pricing, location, availability } = req.body;
 
     try {
         // Check if the vendor exists
@@ -28,6 +28,7 @@ export const postService = async (req, res) => {
             title,
             description,
             category,
+            subCategory, // Add subCategory here
             pricing: {
                 amount: pricing.amount,
                 currency: pricing.currency,
@@ -55,6 +56,75 @@ export const getAllService = async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch services', error });
     }
 };
+
+// Controller to get home services
+export const getHomeService = async (req, res) => {
+    try {
+      // Get the subCategory from the query parameter
+      const { subCategory } = req.query; // e.g. ?subCategory=Plumbing
+  
+      // Build the query object for "Home" category
+      let query = { category: 'Home' };
+  
+      // If subCategory is provided, add it to the query
+      if (subCategory) {
+        query.subCategory = subCategory;
+      }
+  
+      // Fetch the services from the database that match the query
+      const services = await Service.find(query);
+  
+      // Check if services are found
+      if (services.length === 0) {
+        return res.status(404).json({ message: 'No home services found.' });
+      }
+  
+      // Return the found services
+      res.status(200).json({
+        success: true,
+        services,
+      });
+    } catch (error) {
+      console.error('Error fetching home services:', error);
+      res.status(500).json({ message: 'Server error. Could not fetch services.' });
+    }
+  };
+  
+
+
+// Controller to get beauty services
+export const getBeautyService = async (req, res) => {
+  try {
+    // Get the subCategory from the query parameter
+    const { subCategory } = req.query; // e.g. ?subCategory=Haircut
+
+    // Build the query object
+    let query = { category: 'Beauty' };
+
+    // If subCategory is provided, add it to the query
+    if (subCategory) {
+      query.subCategory = subCategory;
+    }
+
+    // Fetch the services from the database that match the query
+    const services = await Service.find(query);
+
+    // Check if services are found
+    if (services.length === 0) {
+      return res.status(404).json({ message: 'No beauty services found.' });
+    }
+
+    // Return the found services
+    res.status(200).json({
+      success: true,
+      services,
+    });
+  } catch (error) {
+    console.error('Error fetching beauty services:', error);
+    res.status(500).json({ message: 'Server error. Could not fetch services.' });
+  }
+};
+
 
 // Controller to get all services for a specific vendor
 export const getVendorServices = async (req, res) => {

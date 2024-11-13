@@ -3,16 +3,25 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import './styles/ServiceForm.css';
 
+const categoryOptions = {
+  Home: ['Plumbing', 'Electrical', 'Cleaning', 'Painting'],
+  Beauty: ['Haircut', 'Makeup', 'Nails', 'Massage'],
+  'Real Estate': ['Agent', 'Property Management', 'Consultation'],
+  IT: ['Software Development', 'Technical Support', 'Networking'],
+  Other: ['Custom Service', 'General'],
+};
+
 const ServiceForm = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     category: '',
+    subCategory: '',
     pricing: { amount: 0, currency: 'INR' },
     location: { city: '', state: '', country: '', zipCode: '' },
     availability: { from: '', to: '' },
   });
-  const [imageFile, setImageFile] = useState(null); // State for selected image file
+  const [imageFile, setImageFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +40,15 @@ const ServiceForm = () => {
     }
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    setFormData({
+      ...formData,
+      category: selectedCategory,
+      subCategory: '', // Reset subCategory when category changes
+    });
+  };
+
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
   };
@@ -39,12 +57,11 @@ const ServiceForm = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('vendorToken');
-
-      // Prepare FormData
       const data = new FormData();
       data.append('title', formData.title);
       data.append('description', formData.description);
       data.append('category', formData.category);
+      data.append('subCategory', formData.subCategory);
       data.append('pricing[amount]', formData.pricing.amount);
       data.append('pricing[currency]', formData.pricing.currency);
       data.append('location[city]', formData.location.city);
@@ -55,7 +72,7 @@ const ServiceForm = () => {
       data.append('availability[to]', formData.availability.to);
 
       if (imageFile) {
-        data.append('image', imageFile); // Append the image file
+        data.append('image', imageFile);
       }
 
       const response = await axios.post(
@@ -64,18 +81,18 @@ const ServiceForm = () => {
         {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data', // Important for file uploads
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
 
       toast.success(response.data.message);
 
-      // Reset form data and image file after successful submission
       setFormData({
         title: '',
         description: '',
         category: '',
+        subCategory: '',
         pricing: { amount: 0, currency: 'INR' },
         location: { city: '', state: '', country: '', zipCode: '' },
         availability: { from: '', to: '' },
@@ -110,18 +127,31 @@ const ServiceForm = () => {
       <select
         name="category"
         value={formData.category}
-        onChange={handleChange}
+        onChange={handleCategoryChange}
         required
       >
         <option value="">Select Category</option>
-        <option value="Plumbing">Plumbing</option>
-        <option value="Electrical">Electrical</option>
-        <option value="Cleaning">Cleaning</option>
-        <option value="Moving">Moving</option>
-        <option value="Painting">Painting</option>
-        <option value="IT Support">IT Support</option>
-        <option value="Other">Other</option>
+        {Object.keys(categoryOptions).map((category) => (
+          <option key={category} value={category}>{category}</option>
+        ))}
       </select>
+
+      {formData.category && (
+        <>
+          <label>SubCategory</label>
+          <select
+            name="subCategory"
+            value={formData.subCategory}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select SubCategory</option>
+            {categoryOptions[formData.category].map((subCategory) => (
+              <option key={subCategory} value={subCategory}>{subCategory}</option>
+            ))}
+          </select>
+        </>
+      )}
 
       <label>Price</label>
       <input

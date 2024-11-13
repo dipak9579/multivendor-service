@@ -31,17 +31,20 @@ const ServicePost = () => {
         {services.map((service) => (
           <div key={service._id} className="service-card">
             <img 
-              src={service.images[0]?.url || '/placeholder-image.jpg'} // Use a placeholder if no image
-              alt={service.images[0]?.altText || service.title} 
+              src={service.images?.[0]?.url || '/placeholder-image.jpg'} 
+              alt={service.images?.[0]?.altText || service.title} 
               className="service-image" 
             />
             <h3>{service.title}</h3>
             <p>{service.description}</p>
             <p><strong>Category:</strong> {service.category}</p>
+            {service.subCategory && (
+              <p><strong>SubCategory:</strong> {service.subCategory}</p>
+            )}
             <p><strong>Price:</strong> {service.pricing.amount} {service.pricing.currency}</p>
-            <p><strong>Location:</strong> {`${service.location.city}, ${service.location.state}`}</p>
+            <p><strong>Location:</strong> {`${service.location.city}, ${service.location.state}, ${service.location.country}`}</p>
             <div className="service-rating">
-              <strong>Rating:</strong> {service.rating} ⭐
+              <strong>Rating:</strong> {service.rating || 'N/A'} ⭐
             </div>
             <button 
               className="book-button" 

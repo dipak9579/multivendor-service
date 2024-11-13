@@ -33,7 +33,8 @@ import BookingForm from './components/Booking/BookingForm';
 import ConfirmationPage from './components/Booking/ConfirmationPage';
 import GetBookings from './components/Booking/GetBookings';
 import AboutUs from './components/navbar/AboutUs';
-
+import { ServiceProvider } from './context/ServiceContext';
+import BeautyService from './components/serviceListing/BeautyService';
 
 // HomePage component to use `user` inside AuthProvider context
 const HomePage = () => {
@@ -42,13 +43,11 @@ const HomePage = () => {
   return (
     <>
       <Hero />
-      <ServicePost />
       <FeatureService />
       <Category />
       <Testimonials />
       <Benefits />
-      <TrustBadges />
-      <ContactUs />
+      <TrustBadges />   
       <Endorsements />
       <FAQ />
 
@@ -86,7 +85,39 @@ const App = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
-            <Route path="/home-service" element={<HomeService />} />
+             {/* Service Pages wrapped in ServiceProvider */}
+             <Route 
+              path="/home-service" 
+              element={
+                <ServiceProvider serviceType="getHomeService">
+                  <HomeService />
+                </ServiceProvider>
+              } 
+            />
+            <Route 
+              path="/car-service" 
+              element={
+                <ServiceProvider serviceType="getCarService">
+                  <HomeService /> {/* CarService component can be created similarly to HomeService */}
+                </ServiceProvider>
+              } 
+            />
+            <Route 
+              path="/beauty-service" 
+              element={
+                <ServiceProvider serviceType="getBeauty">
+                 <BeautyService/>
+                </ServiceProvider>
+              } 
+            />
+            <Route 
+              path="/real-estate-service" 
+              element={
+                <ServiceProvider serviceType="getRealEstateService">
+                  <HomeService /> {/* RealEstateService component can be created similarly */}
+                </ServiceProvider>
+              } 
+            />
             <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </VendorAuthProvider>

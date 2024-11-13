@@ -18,6 +18,9 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  subCategory: {
+    type: String,  // Add this field for subcategory
+  },
   pricing: {
     amount: {
       type: Number,

@@ -1,14 +1,13 @@
-// HomeService.js
 import React, { useContext } from 'react';
 import { ServiceContext } from '../../context/ServiceContext';
 import './Service.css';
 
-const HomeService = () => {
+const BeautyService = () => {
   const { filteredServices, selectedSubCategory, setSelectedSubCategory } = useContext(ServiceContext);
 
   return (
     <div className="service-all">
-      <h2>Home Services</h2>
+      <h2>Beauty Services</h2>
       
       {/* Category Dropdown */}
       <div className="filter-bar">
@@ -17,10 +16,10 @@ const HomeService = () => {
           onChange={(e) => setSelectedSubCategory(e.target.value)}
         >
           <option value="">Select Category</option>
-          <option value="Plumbing">Plumbing</option>
-          <option value="Electrical">Electrical</option>
-          <option value="Cleaning">Cleaning</option>
-          <option value="Painting">Painting</option>
+          <option value="Haircut">Haircut</option>
+          <option value="Makeup">Makeup</option>
+          <option value="Nails">Nails</option>
+          <option value="Spa">Spa</option>
           <option value="Other">Other</option>
         </select>
       </div>
@@ -53,4 +52,4 @@ const HomeService = () => {
   );
 };
 
-export default HomeService;
+export default BeautyService;

@@ -12,10 +12,13 @@ const Category = () => {
                 <h2>Categories</h2>
             </div>
             <div className='category-box'>
+                <Link to="beauty-service">
                 <div className='category'>
                     <img src={beauty} alt="" />
                     <span>Beauty</span>
                 </div>
+                </Link>
+              
                 <Link to="home-service">
                 <div className='category'>
                     <img src={homeDecor} alt="" />

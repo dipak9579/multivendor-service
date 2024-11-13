@@ -29,7 +29,7 @@
     color: #f0f0f0; /* Text color in inputs */
   }
   
-  .login-form button {
+  .btn-login {
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -39,7 +39,7 @@
     transition: background-color 0.3s;
   }
   
-  .login-form button:hover {
+  .btn-login:hover {
     background-color: #45a049; /* Darker green on hover */
   }
   

@@ -5,11 +5,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardHome from './DashboardHome';
 import ServiceForm from './ServiceForm';
-import ServiceList from './ServiceList';
+
 import BookingsList from './BookingsList';
 import VendorProfile from './VendorProfile';
 
 import './styles/VendorDashboard.css';
+import VendorServices from './VendorServices';
 
 const VendorDashboard = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -57,7 +58,7 @@ const VendorDashboard = () => {
       <main className="main-content">
         {activeTab === 'home' && <DashboardHome />}
         {activeTab === 'postService' && <ServiceForm />}
-        {activeTab === 'viewServices' && <ServiceList />}
+        {activeTab === 'viewServices' && <VendorServices/>}
         {activeTab === 'bookings' && <BookingsList />}
         {activeTab === 'profile' && <VendorProfile />}
       </main>

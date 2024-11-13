@@ -43,8 +43,8 @@ const Navbar = () => {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/vendorDashboard">Vendor Dashboard</Link></li>
-          <li><Link to='/vendorServices'>Manage Services</Link></li>
-          <li><Link to="/vendorBookings">Bookings</Link></li>
+         
+         
         </ul>
       ) : (
         // Render Default Navbar for Users

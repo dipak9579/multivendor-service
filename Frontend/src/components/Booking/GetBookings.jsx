@@ -76,7 +76,7 @@ const GetBookings = () => {
         <div className="bookings-list">
           {bookings.map((booking) => (
             <div key={booking._id} className="booking-item">
-              <h3>Service: {booking.service.name}</h3>
+              {/* <h3>Service: {booking.service.name}</h3> */}
               <p><strong>Vendor:</strong> {booking.vendor.name}</p>
               <p><strong>Scheduled Date:</strong> {new Date(booking.scheduledDate).toLocaleString()}</p>
               <p><strong>Status:</strong> {booking.status}</p>

@@ -57,14 +57,18 @@ h2 {
   background-color: #3B78B5;
 }
 
-.logout-button {
+.btn-logout {
+  width: 100px;
+  border-radius: 4px;
+  padding: 8px 10px;
+ 
   background-color: #2196F3;
   color: white;
   border: none;
 
 }
 
-.logout-button:hover {
+.btn-logout:hover {
   background-color: #c0392b;
 }
 

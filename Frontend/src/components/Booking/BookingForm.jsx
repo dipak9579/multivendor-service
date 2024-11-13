@@ -130,7 +130,7 @@ const BookingForm = () => {
         required
       />
 
-      <button type="submit">Book Service</button>
+      <button className='book-btn1' type="submit">Book Service</button>
     </form>
   );
 };

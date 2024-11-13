@@ -145,3 +145,51 @@ export const completeBooking = async (req, res) => {
         res.status(500).json({ message: 'Failed to complete booking', error });
     }
 };
+
+export const getVendorBookings = async (req, res) => {
+    const vendorId = req.vendorId; // Assume vendorId is set by the authentication middleware
+
+    try {
+        // Fetch all services created by this vendor
+        const services = await Service.find({ vendor: vendorId });
+
+        console.log("Services found for vendor:", services);  // Debugging the services
+
+        if (!Array.isArray(services) || services.length === 0) {
+            // No services found for the vendor, so fetch all bookings
+            console.log('No services found for this vendor');
+            const bookingsWithoutServices = await Booking.find({ vendor: vendorId })
+                .populate('user', 'name email')
+                .populate('service', 'title category')
+                .populate('payment')
+                .populate('review')
+                .sort({ scheduledDate: 1 });
+
+            if (!Array.isArray(bookingsWithoutServices) || bookingsWithoutServices.length === 0) {
+                return res.status(404).json({ message: 'No bookings found for this vendor' });
+            }
+
+            return res.status(200).json({ bookings: bookingsWithoutServices });
+        }
+
+        // Fetch bookings related to the vendor's services
+        const bookings = await Booking.find({
+            vendor: vendorId,
+            service: { $in: services.map(service => service._id) }, // Only bookings for services created by the vendor
+        })
+            .populate('user', 'name email')
+            .populate('service', 'title category')
+            .populate('payment')
+            .populate('review')
+            .sort({ scheduledDate: 1 });
+
+        if (!Array.isArray(bookings) || bookings.length === 0) {
+            return res.status(404).json({ message: 'No bookings found for your services' });
+        }
+
+        res.status(200).json({ bookings });
+    } catch (error) {
+        console.error('Error fetching vendor bookings:', error);
+        res.status(500).json({ message: 'Failed to fetch vendor bookings', error: error.message });
+    }
+};

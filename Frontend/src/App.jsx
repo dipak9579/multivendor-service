@@ -48,7 +48,7 @@ const HomePage = () => {
       <Category />
       <Testimonials />
       <Benefits />
-      <TrustBadges />   
+      <TrustBadges />
       <Endorsements />
       <FAQ />
 
@@ -64,11 +64,11 @@ const App = () => {
         <VendorAuthProvider>
           <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} /> 
-            <Route path='/aboutUs' element={<AboutUs/>}/>
+            <Route path="/" element={<HomePage />} />
+            <Route path='/aboutUs' element={<AboutUs />} />
 
-            <Route path='/getBookings' element={<ProtectedRoute><GetBookings/></ProtectedRoute>}/>
-            
+            <Route path='/getBookings' element={<ProtectedRoute><GetBookings /></ProtectedRoute>} />
+
             <Route path='/book' element={<ProtectedRoute><BookingForm /></ProtectedRoute>} />
             <Route path='/confirmation' element={<ProtectedRoute><ConfirmationPage /></ProtectedRoute>} />
 
@@ -81,44 +81,39 @@ const App = () => {
               </VendorProtectedRoute>
             } />
 
+          
+
             <Route path="/getAllService" element={<ServicePost />} />
             <Route path="/postService" element={<ServiceForm />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
-             {/* Service Pages wrapped in ServiceProvider */}
-             <Route 
-              path="/home-service" 
+            {/* Service Pages wrapped in ServiceProvider */}
+            <Route
+              path="/home-service"
               element={
                 <ServiceProvider serviceType="getHomeService">
                   <HomeService />
                 </ServiceProvider>
-              } 
+              }
             />
-            <Route 
-              path="/realState-service" 
+            <Route
+              path="/realState-service"
               element={
                 <ServiceProvider serviceType="getRealState">
-                  <RealStateAgent/>
+                  <RealStateAgent />
                 </ServiceProvider>
-              } 
+              }
             />
-            <Route 
-              path="/beauty-service" 
+            <Route
+              path="/beauty-service"
               element={
                 <ServiceProvider serviceType="getBeauty">
-                 <BeautyService/>
+                  <BeautyService />
                 </ServiceProvider>
-              } 
+              }
             />
-            <Route 
-              path="/real-estate-service" 
-              element={
-                <ServiceProvider serviceType="getRealEstateService">
-                  <HomeService /> {/* RealEstateService component can be created similarly */}
-                </ServiceProvider>
-              } 
-            />
+
             <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </VendorAuthProvider>

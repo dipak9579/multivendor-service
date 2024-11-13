@@ -3,6 +3,21 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "./ServicePost.css";
 
+// Function to render stars based on the rating value
+const renderStars = (rating) => {
+  const fullStars = Math.floor(rating); // Number of full stars
+  const hasHalfStar = rating % 1 >= 0.5; // Check if there's a half star
+  const emptyStars = 5 - Math.ceil(rating); // Number of empty stars
+
+  return (
+    <div className="star-rating">
+      {Array(fullStars).fill(<span className="star full-star">★</span>)}
+      {hasHalfStar && <span className="star half-star">☆</span>}
+      {Array(emptyStars).fill(<span className="star empty-star">☆</span>)}
+    </div>
+  );
+};
+
 const ServicePost = () => {
   const [services, setServices] = useState([]);
   const navigate = useNavigate();
@@ -44,7 +59,8 @@ const ServicePost = () => {
             <p><strong>Price:</strong> {service.pricing.amount} {service.pricing.currency}</p>
             <p><strong>Location:</strong> {`${service.location.city}, ${service.location.state}, ${service.location.country}`}</p>
             <div className="service-rating">
-              <strong>Rating:</strong> {service.rating || 'N/A'} ⭐
+              <strong>Rating:</strong> 
+              {service.averageRating !== null ? renderStars(service.averageRating) : 'No ratings yet'}
             </div>
             <button 
               className="book-button" 

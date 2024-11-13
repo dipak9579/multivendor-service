@@ -44,7 +44,7 @@ const VendorServices = () => {
   };
 
   return (
-    <div className="vendor-services">
+    <div className="vendorServices">
       <h2>Your Created Services</h2>
       <div className="services-list">
         {services.length === 0 ? (

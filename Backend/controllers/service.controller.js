@@ -1,5 +1,6 @@
 import Service from '../models/service.model.js';
 import Vendor from '../models/vendor.model.js';
+import Booking from '../models/booking.model.js';
 
 // Post Service - Create a new service after vendor login
 export const postService = async (req, res) => {
@@ -47,14 +48,33 @@ export const postService = async (req, res) => {
 };
 
 
-// Controller to get all services
+// Get all services with average rating from completed bookings
 export const getAllService = async (req, res) => {
-    try {
-        const services = await Service.find();
-        res.status(200).json({ services });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch services', error });
-    }
+  try {
+      const services = await Service.find(); // Find all services
+
+      // For each service, calculate the average rating from completed bookings
+      const servicesWithRatings = await Promise.all(
+          services.map(async (service) => {
+              // Find all completed bookings for this service
+              const bookings = await Booking.find({ service: service._id, status: 'Completed' });
+
+              // Extract ratings from completed bookings
+              const ratings = bookings.map((booking) => booking.rating).filter((rating) => rating !== undefined);
+              const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+
+              return {
+                  ...service.toObject(),
+                  averageRating: averageRating, // Add the average rating to the service
+              };
+          })
+      );
+
+      res.json({ services: servicesWithRatings });
+  } catch (error) {
+      console.error('Error fetching services with ratings:', error);
+      res.status(500).json({ message: 'Error fetching services with ratings' });
+  }
 };
 
 // Controller to get home services

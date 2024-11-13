@@ -47,6 +47,10 @@ const serviceSchema = new mongoose.Schema({
       altText: String,
     },
   ],
+  rating: {
+    type: Number,
+    
+  },
 }, {
   timestamps: true,
 });

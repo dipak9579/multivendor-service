@@ -11,12 +11,17 @@ const renderStars = (rating) => {
 
   return (
     <div className="star-rating">
-      {Array(fullStars).fill(<span className="star full-star">★</span>)}
-      {hasHalfStar && <span className="star half-star">☆</span>}
-      {Array(emptyStars).fill(<span className="star empty-star">☆</span>)}
+      {Array(fullStars).fill().map((_, index) => (
+        <span key={`full-${index}`} className="star full-star">★</span>
+      ))}
+      {hasHalfStar && <span key="half" className="star half-star">☆</span>}
+      {Array(emptyStars).fill().map((_, index) => (
+        <span key={`empty-${index}`} className="star empty-star">☆</span>
+      ))}
     </div>
   );
 };
+
 
 const ServicePost = () => {
   const [services, setServices] = useState([]);

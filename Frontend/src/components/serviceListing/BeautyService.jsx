@@ -53,9 +53,9 @@ const BeautyService = () => {
       </div>
 
       {/* Service Cards */}
-      <div className="service-cards">
+      <div className="service-cards1">
         {filteredServices.map((service) => (
-          <div className="service-card" key={service._id}>
+          <div className="service-card1" key={service._id}>
             <img 
               src={service.images[0]?.url || '/placeholder-image.jpg'} 
               alt={service.images[0]?.altText || service.title} 

@@ -29,15 +29,15 @@ const AboutUs = () => {
         <div className="team-members">
           <div className="team-member">
             <img src="https://via.placeholder.com/150" alt="Team Member" />
-            <p>Jane Doe - CEO</p>
+            <p>Ganesh Parhad - CEO</p>
           </div>
           <div className="team-member">
             <img src="https://via.placeholder.com/150" alt="Team Member" />
-            <p>John Smith - CTO</p>
+            <p>Dipak Dandge - CTO</p>
           </div>
           <div className="team-member">
             <img src="https://via.placeholder.com/150" alt="Team Member" />
-            <p>Sarah Brown - Head of Marketing</p>
+            <p>Kaustubh Jangale - Head of Marketing</p>
           </div>
         </div>
       </section>

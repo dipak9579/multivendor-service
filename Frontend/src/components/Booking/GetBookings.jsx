@@ -36,7 +36,7 @@ const GetBookings = () => {
 
   const handleCancelBooking = async (bookingId) => {
     const cancellationReason = prompt('Enter a reason for cancellation (optional):');
-    
+
     if (!cancellationReason) {
       toast.error('Cancellation reason is required');
       return;
@@ -44,7 +44,7 @@ const GetBookings = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/bookings/cancel/${bookingId}`, 
+      await axios.put(`http://localhost:5000/api/bookings/cancel/${bookingId}`,
         { cancellationReason },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -111,20 +111,21 @@ const GetBookings = () => {
               {booking.status === 'Cancelled' && (
                 <p><strong>Cancellation Reason:</strong> {booking.cancellationReason}</p>
               )}
-              {booking.status !== 'Cancelled' && (
-                <button 
-                  className="btn-cancel" 
+              {booking.status !== 'Completed' && booking.status !== 'Cancelled' && (
+                <button
+                  className="btn-cancel"
                   onClick={() => handleCancelBooking(booking._id)}
                 >
                   Cancel Booking
                 </button>
               )}
+
               {booking.status === 'Completed' && !booking.rating && (
-                <button 
-                    className="btn-rate" 
-                    onClick={() => handleRateBooking(booking._id)}
+                <button
+                  className="btn-rate"
+                  onClick={() => handleRateBooking(booking._id)}
                 >
-                    Rate Service
+                  Rate Service
                 </button>
               )}
               {booking.rating && <p><strong>Your Rating:</strong> {booking.rating} / 5</p>}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,6 +21,29 @@ const BookingForm = () => {
     zipCode: '',
   });
   const [paymentAmount, setPaymentAmount] = useState('');
+  const [currency, setCurrency] = useState('');
+  const [serviceDetails, setServiceDetails] = useState(null); // Store the service details
+
+  // Fetch service details when the component mounts
+  useEffect(() => {
+    if (serviceId) {
+      const fetchServiceDetails = async () => {
+        try {
+          const response = await axios.get(`http://localhost:5000/api/services/getService/${serviceId}`);
+          const service = response.data;
+
+          setServiceDetails(service); // Set the service details in state
+          setPaymentAmount(service.pricing.amount); // Set the price
+          setCurrency(service.pricing.currency); // Set the currency
+        } catch (error) {
+          console.error('Error fetching service details:', error);
+          toast.error('Failed to fetch service details.');
+        }
+      };
+
+      fetchServiceDetails();
+    }
+  }, [serviceId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,15 +145,21 @@ const BookingForm = () => {
         />
       </fieldset>
 
-      <label>Payment Amount:</label>
-      <input
-        type="number"
-        value={paymentAmount}
-        onChange={(e) => setPaymentAmount(e.target.value)}
-        required
-      />
+      {serviceDetails ? (
+        <div>
+          <label>Payment Amount ({currency}):</label>
+          <input
+            type="number"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+            required
+          />
+        </div>
+      ) : (
+        <p>Loading service details...</p> // Show loading message until the service details are fetched
+      )}
 
-      <button className='book-btn1' type="submit">Book Service</button>
+      <button className="book-btn1" type="submit">Book Service</button>
     </form>
   );
 };

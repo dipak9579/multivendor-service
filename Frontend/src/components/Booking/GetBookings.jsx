@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './GetBookings.css';
 
 const GetBookings = () => {
@@ -36,27 +38,27 @@ const GetBookings = () => {
     const cancellationReason = prompt('Enter a reason for cancellation (optional):');
     
     if (!cancellationReason) {
-        alert('Cancellation reason is required');
-        return;
+      toast.error('Cancellation reason is required');
+      return;
     }
 
     try {
-        const token = localStorage.getItem('token');
-        await axios.put(`http://localhost:5000/api/bookings/cancel/${bookingId}`, 
-            { cancellationReason },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
+      const token = localStorage.getItem('token');
+      await axios.put(`http://localhost:5000/api/bookings/cancel/${bookingId}`, 
+        { cancellationReason },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-        setBookings((prevBookings) =>
-            prevBookings.map((booking) =>
-                booking._id === bookingId ? { ...booking, status: 'Cancelled', cancellationReason } : booking
-            )
-        );
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking._id === bookingId ? { ...booking, status: 'Cancelled', cancellationReason } : booking
+        )
+      );
 
-        alert('Booking cancelled successfully');
+      toast.success('Booking cancelled successfully');
     } catch (error) {
-        console.error('Error cancelling booking:', error.response?.data?.message || error.message);
-        alert('Error cancelling booking');
+      console.error('Error cancelling booking:', error.response?.data?.message || error.message);
+      toast.error('Error cancelling booking');
     }
   };
 
@@ -64,27 +66,27 @@ const GetBookings = () => {
     const rating = prompt('Rate the service (1-5):');
 
     if (!rating || rating < 1 || rating > 5) {
-        alert('Please provide a rating between 1 and 5.');
-        return;
+      toast.error('Please provide a rating between 1 and 5.');
+      return;
     }
 
     try {
-        const token = localStorage.getItem('token');
-        await axios.put(`http://localhost:5000/api/bookings/rate/${bookingId}`,
-            { rating },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
+      const token = localStorage.getItem('token');
+      await axios.put(`http://localhost:5000/api/bookings/rate/${bookingId}`,
+        { rating },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-        setBookings((prevBookings) =>
-            prevBookings.map((booking) =>
-                booking._id === bookingId ? { ...booking, rating } : booking
-            )
-        );
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking._id === bookingId ? { ...booking, rating } : booking
+        )
+      );
 
-        alert('Rating submitted successfully');
+      toast.success('Rating submitted successfully');
     } catch (error) {
-        console.error('Error submitting rating:', error.response?.data?.message || error.message);
-        alert('Error submitting rating');
+      console.error('Error submitting rating:', error.response?.data?.message || error.message);
+      toast.error('Error submitting rating');
     }
   };
 
@@ -92,6 +94,7 @@ const GetBookings = () => {
 
   return (
     <div className="bookings-container">
+      <ToastContainer />
       <button className="btn-back" onClick={() => navigate(-1)}>Back</button>
       <h2>Your Booked Services</h2>
       {bookings.length === 0 ? (

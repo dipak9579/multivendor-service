@@ -84,4 +84,44 @@
   .book-button:hover {
     background-color: #3B78B5; /* Change background color on hover */
   }
-  
+
+.service-rating {
+    font-size: 1.1rem;
+    color: #ff9900;
+    margin-bottom: 15px;
+  }
+
+/* Ensures the layout is flexible and aligns items in a row */
+.service-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers the stars vertically with the text */
+  margin-top: 10px; /* Optional: adds some space above */
+}
+
+.service-rating strong {
+  margin-right: 10px; /* Space between "Rating:" and the stars */
+  font-size: 16px; /* Adjust as necessary */
+}
+
+/* Style for the stars */
+.star-rating {
+  display: flex; /* Arrange stars in a row */
+  font-size: 18px; /* Adjust the size of the stars */
+}
+
+.star {
+  color: gold; /* Full star color */
+}
+
+.full-star {
+  color: gold; /* Full star color */
+}
+
+.half-star {
+  color: gold; /* Half star color */
+}
+
+.empty-star {
+  color: lightgray; /* Empty star color */
+}

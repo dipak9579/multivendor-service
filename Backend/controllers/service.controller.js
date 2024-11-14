@@ -48,6 +48,22 @@ export const postService = async (req, res) => {
 };
 
 
+export const getServiceById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const service = await Service.findById(id);
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    res.json(service);
+  } catch (error) {
+    console.error('Error fetching service details:', error);
+    res.status(500).json({ message: 'Error fetching service details' });
+  }
+};
+
+
 // Get all services with average rating from completed bookings
 export const getAllService = async (req, res) => {
   try {
@@ -77,83 +93,116 @@ export const getAllService = async (req, res) => {
   }
 };
 
-// Controller to get home services
+// Controller to get home services with average rating
 export const getHomeService = async (req, res) => {
-    try {
-      // Get the subCategory from the query parameter
-      const { subCategory } = req.query; // e.g. ?subCategory=Plumbing
-  
-      // Build the query object for "Home" category
-      let query = { category: 'Home' };
-  
-      // If subCategory is provided, add it to the query
-      if (subCategory) {
-        query.subCategory = subCategory;
-      }
-  
-      // Fetch the services from the database that match the query
-      const services = await Service.find(query);
-  
-      // Check if services are found
-      if (services.length === 0) {
-        return res.status(404).json({ message: 'No home services found.' });
-      }
-  
-      // Return the found services
-      res.status(200).json({
-        success: true,
-        services,
-      });
-    } catch (error) {
-      console.error('Error fetching home services:', error);
-      res.status(500).json({ message: 'Server error. Could not fetch services.' });
-    }
-  };
-
-
-
-  // Controller to get real estate agent services
-  export const getRealEstate = async (req, res) => {
-    try {
-      // Get the subCategory from the query parameter (e.g. ?subCategory=Agent)
-      const { subCategory } = req.query;
-  
-      // Build the query object
-      let query = { category: 'Real Estate'};
-  
-      // If subCategory is provided, add it to the query
-      if (subCategory) {
-        query.subCategory = subCategory;
-      }
-  
-      // Fetch the services from the database that match the query
-      const services = await Service.find(query);
-  
-      // Check if services are found
-      if (services.length === 0) {
-        return res.status(404).json({ message: 'No real estate agent services found.' });
-      }
-  
-      // Return the found services
-      res.status(200).json({
-        success: true,
-        services,
-      });
-    } catch (error) {
-      console.error('Error fetching real estate agent services:', error);
-      res.status(500).json({ message: 'Server error. Could not fetch services.' });
-    }
-  };
-  
-
-
-// Controller to get beauty services
-export const getBeautyService = async (req, res) => {
   try {
     // Get the subCategory from the query parameter
-    const { subCategory } = req.query; // e.g. ?subCategory=Haircut
+    const { subCategory } = req.query; // e.g. ?subCategory=Plumbing
 
-    // Build the query object
+    // Build the query object for "Home" category
+    let query = { category: 'Home' };
+
+    // If subCategory is provided, add it to the query
+    if (subCategory) {
+      query.subCategory = subCategory;
+    }
+
+    // Fetch the services from the database that match the query
+    const services = await Service.find(query);
+
+    // Check if services are found
+    if (services.length === 0) {
+      return res.status(404).json({ message: 'No home services found.' });
+    }
+
+    // Calculate the average rating for each service
+    const servicesWithRatings = await Promise.all(
+      services.map(async (service) => {
+        // Find all completed bookings for this service
+        const bookings = await Booking.find({ service: service._id, status: 'Completed' });
+
+        // Extract ratings from completed bookings
+        const ratings = bookings.map((booking) => booking.rating).filter((rating) => rating !== undefined);
+        const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+
+        return {
+          ...service.toObject(),
+          averageRating: averageRating, // Add the average rating to the service
+        };
+      })
+    );
+
+    // Return the services with average ratings
+    res.status(200).json({
+      success: true,
+      services: servicesWithRatings,
+    });
+  } catch (error) {
+    console.error('Error fetching home services:', error);
+    res.status(500).json({ message: 'Server error. Could not fetch services.' });
+  }
+};
+
+
+// Controller to get real estate agent services with average rating
+export const getRealEstate = async (req, res) => {
+  try {
+    // Get the subCategory from the query parameter (e.g. ?subCategory=Agent)
+    const { subCategory } = req.query;
+
+    // Build the query object for "Real Estate" category
+    let query = { category: 'Real Estate' };
+
+    // If subCategory is provided, add it to the query
+    if (subCategory) {
+      query.subCategory = subCategory;
+    }
+
+    // Fetch the services from the database that match the query
+    const services = await Service.find(query);
+
+    // Check if services are found
+    if (services.length === 0) {
+      return res.status(404).json({ message: 'No real estate agent services found.' });
+    }
+
+    // Calculate the average rating for each service
+    const servicesWithRatings = await Promise.all(
+      services.map(async (service) => {
+        // Find all completed bookings for this service
+        const bookings = await Booking.find({ service: service._id, status: 'Completed' });
+
+        // Extract ratings from completed bookings
+        const ratings = bookings.map((booking) => booking.rating).filter((rating) => rating !== undefined);
+        const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+
+        return {
+          ...service.toObject(),
+          averageRating: averageRating, // Add the average rating to the service
+        };
+      })
+    );
+
+    // Return the services with average ratings
+    res.status(200).json({
+      success: true,
+      services: servicesWithRatings,
+    });
+  } catch (error) {
+    console.error('Error fetching real estate agent services:', error);
+    res.status(500).json({ message: 'Server error. Could not fetch services.' });
+  }
+};
+
+  
+
+// Controller to get beauty services with average rating
+export const getBeautyService = async (req, res) => {
+  try {
+    // Get the subCategory from the query parameter (e.g. ?subCategory=Haircut)
+    const { subCategory } = req.query;
+
+    // Build the query object for "Beauty" category
     let query = { category: 'Beauty' };
 
     // If subCategory is provided, add it to the query
@@ -169,10 +218,27 @@ export const getBeautyService = async (req, res) => {
       return res.status(404).json({ message: 'No beauty services found.' });
     }
 
-    // Return the found services
+    // Calculate the average rating for each service
+    const servicesWithRatings = await Promise.all(
+      services.map(async (service) => {
+        // Find all completed bookings for this service
+        const bookings = await Booking.find({ service: service._id, status: 'Completed' });
+
+        // Extract ratings from completed bookings
+        const ratings = bookings.map((booking) => booking.rating).filter((rating) => rating !== undefined);
+        const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+
+        return {
+          ...service.toObject(),
+          averageRating: averageRating, // Add the average rating to the service
+        };
+      })
+    );
+
+    // Return the services with average ratings
     res.status(200).json({
       success: true,
-      services,
+      services: servicesWithRatings,
     });
   } catch (error) {
     console.error('Error fetching beauty services:', error);

@@ -1,10 +1,37 @@
-// RealEstateAgentService.js
 import React, { useContext } from 'react';
 import { ServiceContext } from '../../context/ServiceContext';
+import { useNavigate } from 'react-router-dom';
 import './Service.css';
 
-const RealStateAgent = () => {
+// Function to render stars based on the rating value
+const renderStars = (rating) => {
+  const fullStars = Math.floor(rating); // Number of full stars
+  const hasHalfStar = rating % 1 >= 0.5; // Check if there's a half star
+  const emptyStars = 5 - Math.ceil(rating); // Number of empty stars
+
+  return (
+    <div className="star-rating">
+      {/* Full stars */}
+      {Array.from({ length: fullStars }, (_, index) => (
+        <span key={`full-${index}`} className="star full-star">★</span>
+      ))}
+      {/* Half star, if applicable */}
+      {hasHalfStar && <span className="star half-star">☆</span>}
+      {/* Empty stars */}
+      {Array.from({ length: emptyStars }, (_, index) => (
+        <span key={`empty-${index}`} className="star empty-star">☆</span>
+      ))}
+    </div>
+  );
+};
+
+const RealEstateAgentService = () => {
   const { filteredServices, selectedSubCategory, setSelectedSubCategory } = useContext(ServiceContext);
+  const navigate = useNavigate();
+
+  const handleBookNow = (serviceId) => {
+    navigate('/book', { state: { serviceId } });
+  };
 
   return (
     <div className="service-all">
@@ -41,9 +68,15 @@ const RealStateAgent = () => {
               <p><strong>Price:</strong> {service.pricing.amount} {service.pricing.currency}</p>
               <p><strong>Location:</strong> {`${service.location.city}, ${service.location.state}`}</p>
               <div className="service-rating">
-                <strong>Rating:</strong> {service.rating} ⭐
+                <strong>Rating:</strong> 
+                {service.averageRating !== null ? renderStars(service.averageRating) : 'No ratings yet'}
               </div>
-              <button className="book-button">Book Now</button>
+              <button 
+                className="book-button" 
+                onClick={() => handleBookNow(service._id)}
+              >
+                Book Now
+              </button>
             </div>
           </div>
         ))}
@@ -52,4 +85,4 @@ const RealStateAgent = () => {
   );
 };
 
-export default RealStateAgent;
+export default RealEstateAgentService;

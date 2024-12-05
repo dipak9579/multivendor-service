@@ -50,7 +50,8 @@ const Navbar = () => {
         // Render Default Navbar for Users
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to='/getAllService'>Service</Link></li>
+         
+          <li><Link to="/services/search">NearByServices</Link></li>
           <li><Link to="/aboutUs">About Us</Link></li>
         </ul>
       )}

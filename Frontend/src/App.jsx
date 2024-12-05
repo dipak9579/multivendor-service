@@ -36,6 +36,7 @@ import AboutUs from './components/navbar/AboutUs';
 import { ServiceProvider } from './context/ServiceContext';
 import BeautyService from './components/serviceListing/BeautyService';
 import RealStateAgent from './components/serviceListing/RealStateAgent';
+import ServiceSearchPage from './components/ServiceSearchPage';
 
 // HomePage component to use `user` inside AuthProvider context
 const HomePage = () => {
@@ -66,6 +67,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path='/aboutUs' element={<AboutUs />} />
+            <Route path="/services/search" element={<ServiceSearchPage />} />
 
             <Route path='/getBookings' element={<ProtectedRoute><GetBookings /></ProtectedRoute>} />
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import upload from '../config/multerConfig.js';
-import { postService,getServiceById, getAllService, deleteService, getVendorServices ,getBeautyService,getHomeService,getRealEstate} from '../controllers/service.controller.js';
+import { postService,getServiceById, getAllService, deleteService, getVendorServices ,getBeautyService,getHomeService,getRealEstate,searchServicesByLocation} from '../controllers/service.controller.js';
 import { VendorMiddleware } from '../middlewares/VendorMiddleware.js';
 
 const router = express.Router();
@@ -14,5 +14,6 @@ router.get('/getBeauty', getBeautyService);
 router.get('/getRealState', getRealEstate);
 router.delete('/deleteService/:serviceId', VendorMiddleware, deleteService);
 router.get('/vendorService', VendorMiddleware, getVendorServices);
+router.get('/search', searchServicesByLocation);
 
 export default router;

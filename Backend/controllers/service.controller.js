@@ -287,3 +287,20 @@ export const deleteService = async (req, res) => {
         res.status(500).json({ message: 'Service deletion failed', error });
     }
 };
+export const searchServicesByLocation = async (req, res) => {
+  try {
+    const { city, state, country } = req.query;
+
+    // Build query based on provided location fields
+    const locationQuery = {};
+    if (city) locationQuery['location.city'] = city;
+    if (state) locationQuery['location.state'] = state;
+    if (country) locationQuery['location.country'] = country;
+
+    const services = await Service.find(locationQuery);
+
+    res.status(200).json(services);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

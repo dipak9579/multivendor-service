@@ -54,7 +54,7 @@ const ServiceLists = ({ services }) => {
             {service.subCategory && (
               <p><strong>SubCategory:</strong> {service.subCategory}</p>
             )}
-            <p><strong>Price:</strong> {`${service.pricing.amount} ${service.pricing.currency}`}</p>
+            <p><strong>Price:</strong> {`${service.pricing?.amount} ${service.pricing?.currency}`}</p>
             <p><strong>Location:</strong> {`${service.location.city}, ${service.location.state}, ${service.location.country}`}</p>
             <div className="service-rating">
               <strong>Rating:</strong>

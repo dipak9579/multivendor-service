@@ -297,9 +297,27 @@ export const searchServicesByLocation = async (req, res) => {
     if (state) locationQuery['location.state'] = state;
     if (country) locationQuery['location.country'] = country;
 
+    // Find services based on location query
     const services = await Service.find(locationQuery);
 
-    res.status(200).json(services);
+    // For each service, calculate the average rating from completed bookings
+    const servicesWithRatings = await Promise.all(
+      services.map(async (service) => {
+        // Find all completed bookings for this service
+        const bookings = await Booking.find({ service: service._id, status: 'Completed' });
+
+        // Extract ratings from completed bookings
+        const ratings = bookings.map((booking) => booking.rating).filter((rating) => rating !== undefined);
+        const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+
+        return {
+          ...service.toObject(),
+          averageRating: averageRating, // Add the average rating to the service
+        };
+      })
+    );
+
+    res.status(200).json(servicesWithRatings);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

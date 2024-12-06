@@ -18,6 +18,10 @@ const userSchema = new Schema({
     bookingHistory: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+    isVerified: { type: Boolean, default: false }, // New field
+    emailVerified: { type: Boolean, default: false },
+    otp: { type: String },
+    otpExpiry: { type: Date },
 });
 
 userSchema.pre('save', function (next) {

@@ -1,0 +1,102 @@
+/* Container Styling */
+.verify-otp-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: transparent;
+    padding: 20px;
+  }
+  
+  /* Title Styling */
+  .verify-otp-container h2 {
+    font-size: 2rem;
+    color:white;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Form Styling */
+  .verify-otp-container form {
+    /* background-color: #fff; */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label Styling */
+  .verify-otp-container form label {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  
+  /* Input Styling */
+  .verify-otp-container form input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  .verify-otp-container form input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Button Styling */
+  .verify-otp-container form button {
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .verify-otp-container form button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+  }
+  
+  .verify-otp-container form button:active {
+    background-color: #004080;
+  }
+  
+  /* Toast Notification Alignment */
+  .Toastify__toast-container {
+    font-size: 1rem;
+    width: auto;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 480px) {
+    .verify-otp-container h2 {
+      font-size: 1.5rem;
+    }
+  
+    .verify-otp-container form {
+      padding: 15px;
+    }
+  
+    .verify-otp-container form button {
+      font-size: 0.9rem;
+    }
+  }
+  

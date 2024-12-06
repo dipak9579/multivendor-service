@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 import User from '../models/user.model.js';
+import crypto from 'crypto';
+import { sendOtpEmail } from '../utils/emailUtil.js';
+
 
 const secretKey=process.env.JWT_SECRET
 
@@ -10,48 +13,93 @@ export const registerUser = async (req, res) => {
     const { name, email, password, contactNumber, address } = req.body;
 
     try {
-        // Check if the user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(400).json({ message: 'User already exists' });
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        // Create the new user
+        // Generate OTP and its expiry
+        const otp = crypto.randomInt(100000, 999999).toString(); // 6-digit OTP
+        const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes from now
+
         const newUser = new User({
             name,
             email,
             password: hashedPassword,
             contactNumber,
-            address
+            address,
+            otp,
+            otpExpiry,
         });
 
         await newUser.save();
-        res.status(201).json({ message: 'User registered successfully', user: newUser });
+
+        // Send OTP email
+        await sendOtpEmail(email, otp);
+
+        res.status(201).json({ message: 'User registered. Please verify your email with the OTP sent.' });
     } catch (error) {
-        console.error('Registration error:', error); // Log the error
+        console.error('Registration error:', error);
         res.status(500).json({ message: 'Registration failed', error });
     }
 };
 
+export const verifyOtp = async (req, res) => {
+    const { email, otp } = req.body;
 
-// User login
+    try {
+        // Find the user and check if the OTP matches
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (user.otp !== otp) {
+            return res.status(400).json({ message: 'Invalid OTP' });
+        }
+
+        // Verify the user
+        user.isVerified = true;
+        user.otp = null; // Clear the OTP after verification
+        await user.save();
+
+        res.status(200).json({ message: 'OTP verified successfully. You can now log in.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error verifying OTP', error });
+    }
+};
+
+
+
 export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
         // Find the user by email
         const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ message: 'User not found' });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-        // Check the password
+        // Check if the user's email is verified
+        if (!user.isVerified) {
+            return res.status(403).json({ message: 'Please verify your email before logging in.' });
+        }
+
+        // Validate the password
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) return res.status(400).json({ message: 'Invalid credentials' });
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
 
         // Generate JWT token
         const token = jwt.sign({ id: user._id, email: user.email }, secretKey, { expiresIn: '1h' });
+
+        // Return the token and success message
         res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ message: 'Login failed', error });
     }
 };

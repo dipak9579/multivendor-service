@@ -38,6 +38,7 @@ import BeautyService from './components/serviceListing/BeautyService';
 import RealStateAgent from './components/serviceListing/RealStateAgent';
 import ServiceSearchPage from './components/ServiceSearchPage';
 import VerifyOtp from './components/VerifyOtp';
+import VerifyOtpVendor from './components/VerifyOtpVendor';
 
 // HomePage component to use `user` inside AuthProvider context
 const HomePage = () => {
@@ -78,6 +79,7 @@ const App = () => {
             <Route path='/confirmation' element={<ProtectedRoute><ConfirmationPage /></ProtectedRoute>} />
 
             <Route path="/vendorRegister" element={<VendorRegister />} />
+            <Route path="/verifyOtp" element={<VerifyOtpVendor/>} />
             <Route path="/vendorLogin" element={<VendorLogin />} />
 
             <Route path="/vendorDashboard" element={

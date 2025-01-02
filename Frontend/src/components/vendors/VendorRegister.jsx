@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
 import './VendorRegister.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -19,6 +20,8 @@ const VendorRegister = () => {
       country: '',
     },
   });
+
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +44,10 @@ const VendorRegister = () => {
     try {
       const response = await axios.post('http://localhost:5000/api/vendors/register', formData);
       toast.success(response.data.message);
+
+      // Redirect to the VerifyOtp page with email as state
+      navigate('/verifyOtp', { state: { email: formData.email } });
+
       setFormData({
         name: '',
         email: '',

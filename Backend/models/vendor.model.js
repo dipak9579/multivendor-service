@@ -26,7 +26,10 @@ const vendorSchema = new Schema({
         },
     ],
     role: { type: String, default: 'vendor', enum: ['vendor'] },
-    isVerified: { type: Boolean, default: false },
+    isVerified: { type: Boolean, default: false }, // New field
+    emailVerified: { type: Boolean, default: false },
+    otp: { type: String },
+    otpExpiry: { type: Date },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });
